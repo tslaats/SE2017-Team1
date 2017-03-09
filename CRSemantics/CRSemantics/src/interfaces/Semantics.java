@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface Semantics {
 	
-	public List<GraphObject> getPossibleActions(CrGraph graph);
+	public List<GraphObject> getPossibleActions(Graph graph);
 
-	public CrGraph executeAction(CrGraph graph, List<String> ids);
+	public Graph executeAction(Graph graph, List<String> ids);
 	
-	public boolean isFinished(CrGraph graph);
+	public boolean isFinished(Graph graph);
 }
