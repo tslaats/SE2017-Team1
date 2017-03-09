@@ -15,22 +15,22 @@ import java.awt.Point;
  *  constructors that the user interface group needs to create, and populate the
  *  structure. This  includes transitions, places and indicators for start & end
  */
-public class PetriGraph extends Graph
+public class PetriNet extends Graph
 {
-    public PetriPlace start = null;
-    public PetriPlace end = null;
-    public ArrayList<PetriTransition> transitions = new ArrayList<PetriTransition>();
-    public ArrayList<PetriPlace> places = new ArrayList<PetriPlace>();
+    public Place start = null;
+    public Place end = null;
+    public ArrayList<Transition> transitions = new ArrayList<Transition>();
+    public ArrayList<Place> places = new ArrayList<Place>();
     
     /**
      *  This is an empty constructor, that is used to instantiate a new instance
-     *  of the PetriGraph class. It takes no parameters and it might appear like
+     *  of the Graph class. It takes no parameters and it might appear like
      *  it isn't doing anything. However, the variables are instantiated using a
      *  lazy-instantiation, so they do not need to be created in the constructor
      *  at all. But the constructor still has to be defined, as we might need to
      *  implement more constructors or add additional auto-generated information
      */
-    public PetriGraph ()
+    public PetriNet ()
     {
         
     }
@@ -40,7 +40,7 @@ public class PetriGraph extends Graph
      *  return it. However in the case that it hasn't been set and someone tries
      *  to get it, it will throw an exception as that is an illegal graph action
      */
-    public PetriPlace getStart ()
+    public Place getStart ()
     {
         if (start == null)
         {
@@ -53,7 +53,7 @@ public class PetriGraph extends Graph
     }
 
     // setStart
-    public void setStart(PetriPlace inputStart)
+    public void setStart(Place inputStart)
     {
         if (inputStart == null)
         {
@@ -70,7 +70,7 @@ public class PetriGraph extends Graph
      *  return it. However in the case that it hasn't been set and someone tries
      *  to get it, it will throw an exception as that is an illegal graph action
      */
-    public PetriPlace getEnd ()
+    public Place getEnd ()
     {
         if (end == null)
         {
@@ -83,7 +83,7 @@ public class PetriGraph extends Graph
     }
 
     // setEnd
-    public void setEnd(PetriPlace inputEnd)
+    public void setEnd(Place inputEnd)
     {
         if (inputEnd == null)
         {
@@ -95,27 +95,27 @@ public class PetriGraph extends Graph
         }
     }
     
-    public void addSinglePlace(PetriPlace place) {
+    public void addSinglePlace(Place place) {
     	places.add(place);
     }
     
-    public void addPlaces(ArrayList<PetriPlace> places) {
+    public void addPlaces(ArrayList<Place> places) {
     	this.places.addAll(places);
     }
     
-    public void addSingleTransition(PetriTransition transition) {
+    public void addSingleTransition(Transition transition) {
     	transitions.add(transition);
     }
     
-    public void addTransitions(ArrayList<PetriTransition> transitions) {
+    public void addTransitions(ArrayList<Transition> transitions) {
     	this.transitions.addAll(transitions);
     }
     
-    public ArrayList<PetriPlace> getPlaces() {
+    public ArrayList<Place> getPlaces() {
     	return places;
     }
     
-    public ArrayList<PetriTransition> getTransitions() {
+    public ArrayList<Transition> getTransitions() {
     	return transitions;
     }
     
@@ -131,19 +131,19 @@ public class PetriGraph extends Graph
      */
     public String toString ()
     {
-        String result = "PetriGraph (start: " + (start == null ? "none" : "assigned") +
+        String result = "Graph (start: " + (start == null ? "none" : "assigned") +
                         ", end: " + (end == null ? "end" : "assigned") + ")";
         
         result = result + "\n- Transitions:";
         
-        for (PetriTransition t : transitions)
+        for (Transition t : transitions)
         {
             result = result + "\n    " + t;
         }
         
         result = result + "\n- Places:";
         
-        for (PetriPlace p : places)
+        for (Place p : places)
         {
             result = result + "\n    " + p;
         }

@@ -15,20 +15,20 @@ import java.awt.Point;
  *  and a reference to outgoing, transitions. It is currently not known if these
  *  place objects can actually have more than one outgoing / incoming connection
  */
-public class PetriPlace
+public class Place
 {
     public int id = -1;
     public Point position = null;
     public boolean token = false;
-    public PetriTransition incoming = null;
-    public PetriTransition outgoing = null;
+    public Transition incoming = null;
+    public Transition outgoing = null;
     
     /**
      *  This is a constructor that creates a new instance of the place class and
      *  populates all of the variables, such as the top left point of the object
      *  and if this place has a token initially, and all of the edge transitions
      */
-    public PetriPlace (int id, Point position, boolean token, PetriTransition incoming, PetriTransition outgoing)
+    public Place (int id, Point position, boolean token, Transition incoming, Transition outgoing)
     {
         this.id         = id;
         this.position   = position;
