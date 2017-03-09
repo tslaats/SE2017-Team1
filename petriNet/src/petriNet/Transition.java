@@ -1,4 +1,4 @@
-
+package petriNet;
 /**
  *  @project >> Software Engineering 2017
  *  @authors >> Emil, Frederik, Mads, Susanne, Philip Falck
@@ -12,24 +12,24 @@ import java.awt.Point;
  *  a petri graph. The node contains a list of incoming- and a list of outgoing-
  *  edges (arcs), as well as a string name and the mandatory position coordinate
  */
-public class PetriTransition
+public class Transition
 {
-    public int                          id              = -1;
-    public Point                        position        = null;
-    public String                       name            = null;
-    public ArrayList<PetriPlace>        incoming        = new ArrayList<PetriPlace>();
-    public ArrayList<PetriPlace>        outgoing        = new ArrayList<PetriPlace>();
+    public int id = -1;
+    public Point position = null;
+    public String name = null;
+    public ArrayList<Place> incoming = new ArrayList<Place>();
+    public ArrayList<Place> outgoing = new ArrayList<Place>();
     
     /**
      *  This is a constructor, that creates a new instance of the transition and
      *  populates all of the variables, such as the top left point of the object
      *  and the given name of the transition, and every of the connecting places
      */
-    public PetriTransition (int id, Point position, String name)
+    public Transition (int id, Point position, String name)
     {
-        this.id         = id;
-        this.position   = position;
-        this.name       = name;
+        this.id = id;
+        this.position = position;
+        this.name = name;
     }
     
     /**
@@ -39,6 +39,8 @@ public class PetriTransition
      */
     public String toString ()
     {
-        return ("Transition (Name: " + name + ", Id: " + id + ", IncomingSize: " + incoming.size() + ", OutgoingSize: " + outgoing.size() + ", Position: " + position.x + "," + position.y + ")");
+        return ("Transition (Name: " + name + ", Id: " + id + ", IncomingSize: " +
+                incoming.size() + ", OutgoingSize: " + outgoing.size() +
+                ", Position: " + position.x + "," + position.y + ")");
     }
 }

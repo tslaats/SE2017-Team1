@@ -12,13 +12,13 @@ public class Main
 {
     public static void main (String[] args)
     {
-        PetriGraph g = new PetriGraph();
+    	PetriNet g = new PetriNet();
         
-        PetriTransition t02 = new PetriTransition( 2, new Point(109, 163), "Receive order");
-        PetriTransition t05 = new PetriTransition( 5, new Point(206, 114), "Ship order");
-        PetriTransition t07 = new PetriTransition( 7, new Point(350, 218), "Questionnaire");
-        PetriTransition t08 = new PetriTransition( 8, new Point(405, 114), "Send invoice");
-        PetriTransition t11 = new PetriTransition(11, new Point(655, 163), "Receive payment");
+        Transition t02 = new Transition( 2, new Point(109, 163), "Receive order");
+        Transition t05 = new Transition( 5, new Point(206, 114), "Ship order");
+        Transition t07 = new Transition( 7, new Point(350, 218), "Questionnaire");
+        Transition t08 = new Transition( 8, new Point(405, 114), "Send invoice");
+        Transition t11 = new Transition(11, new Point(655, 163), "Receive payment");
         
         g.transitions.add(t02);
         g.transitions.add(t05);
@@ -26,13 +26,13 @@ public class Main
         g.transitions.add(t08);
         g.transitions.add(t11);
         
-        PetriPlace p01 = new PetriPlace( 1, new Point( 60, 170), true,  null, t02);
-        PetriPlace p03 = new PetriPlace( 3, new Point(243, 114), false, t02,  t05);
-        PetriPlace p04 = new PetriPlace( 4, new Point(243, 218), false, t02,  t07);
-        PetriPlace p06 = new PetriPlace( 6, new Point(405, 120), false, t05,  t08);
-        PetriPlace p09 = new PetriPlace( 9, new Point(577, 120), false, t08,  t11);
-        PetriPlace p10 = new PetriPlace(10, new Point(577, 218), false, t07,  t11);
-        PetriPlace p12 = new PetriPlace(12, new Point(789, 170), false, t11,  null);
+        Place p01 = new Place( 1, new Point( 60, 170), true,  null, t02);
+        Place p03 = new Place( 3, new Point(243, 114), false, t02,  t05);
+        Place p04 = new Place( 4, new Point(243, 218), false, t02,  t07);
+        Place p06 = new Place( 6, new Point(405, 120), false, t05,  t08);
+        Place p09 = new Place( 9, new Point(577, 120), false, t08,  t11);
+        Place p10 = new Place(10, new Point(577, 218), false, t07,  t11);
+        Place p12 = new Place(12, new Point(789, 170), false, t11,  null);
         
         g.places.add(p01);
         g.places.add(p03);
