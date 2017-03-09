@@ -6,6 +6,7 @@ package petriNet;
  */
 
 import java.util.ArrayList;
+import java.util.List;
 import java.awt.Point;
 
 /**
@@ -92,6 +93,30 @@ public class PetriGraph extends Graph
         {
             end = inputEnd;
         }
+    }
+    
+    public void addSinglePlace(PetriPlace place) {
+    	places.add(place);
+    }
+    
+    public void addPlaces(ArrayList<PetriPlace> places) {
+    	this.places.addAll(places);
+    }
+    
+    public void addSingleTransition(PetriTransition transition) {
+    	transitions.add(transition);
+    }
+    
+    public void addTransitions(ArrayList<PetriTransition> transitions) {
+    	this.transitions.addAll(transitions);
+    }
+    
+    public ArrayList<PetriPlace> getPlaces() {
+    	return places;
+    }
+    
+    public ArrayList<PetriTransition> getTransitions() {
+    	return transitions;
     }
     
     /**
