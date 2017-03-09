@@ -1,12 +1,7 @@
 
 /**
  *  @project >> Software Engineering 2017
- *  @authors >> Emil S. Bak, Philip Falck
- *  @contact >> 
- *  @version >> 1.1.0
- *  @updated >> 09/03-2017
- *  @licence >> MIT
- *  @sources >> 
+ *  @authors >> Emil, Frederik, Mads, Susanne, Philip Falck
  */
 
 import java.util.ArrayList;
@@ -21,11 +16,11 @@ import java.awt.Point;
  */
 public class PetriPlace
 {
-    public int                          id              = -1;
-    public Point                        position        = null;
-    public boolean                      token           = false;
-    public PetriTransition              incoming        = null;
-    public PetriTransition              outgoing        = null;
+    public int id = -1;
+    public Point position = null;
+    public boolean token = false;
+    public PetriTransition incoming = null;
+    public PetriTransition outgoing = null;
     
     /**
      *  This is a constructor that creates a new instance of the place class and
@@ -42,12 +37,14 @@ public class PetriPlace
     }
     
     /**
-     *  This is a debugging method, for printing out a textual representation of
-     *  the node. It actually doesn't print, it's just a toString, sorry, my bad
-     *  but yeah, so I wonder, does anyone even reads these comments I guess not
+     *  This is a debugging method, for returning out a textual representation of
+     *  the node, meant for printing.
      */
     public String toString ()
     {
-        return ("Place (Token: " + token + ", Id: " + id + ", Incoming: " + (incoming == null ? "none" : "assigned") + ", Outgoing: " + (outgoing == null ? "none" : "assigned") + ", Position: " + position.x + "," + position.y + ")");
+        return ("Place (Token: " + token + ", Id: " + id + ", Incoming: " +
+                (incoming == null ? "none" : "assigned") + ", Outgoing: " +
+                (outgoing == null ? "none" : "assigned") + ", Position: " +
+                position.x + "," + position.y + ")");
     }
 }

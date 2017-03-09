@@ -1,12 +1,7 @@
 
 /**
  *  @project >> Software Engineering 2017
- *  @authors >> Philip Falck
- *  @contact >> 
- *  @version >> 1.1.0
- *  @updated >> 09/03-2017
- *  @licence >> MIT
- *  @sources >> 
+ *  @authors >> Emil, Frederik, Mads, Susanne, Philip Falck
  */
 
 import java.util.ArrayList;

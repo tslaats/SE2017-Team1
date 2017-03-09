@@ -1,12 +1,7 @@
 
 /**
  *  @project >> Software Engineering 2017
- *  @authors >> Emil S. Bak, Philip Falck
- *  @contact >> 
- *  @version >> 1.1.0
- *  @updated >> 09/03-2017
- *  @licence >> MIT
- *  @sources >> 
+ *  @authors >> Emil, Frederik, Mads, Susanne, Philip Falck
  */
 
 import java.util.ArrayList;
@@ -20,10 +15,10 @@ import java.awt.Point;
  */
 public class PetriGraph extends Graph
 {
-    public PetriPlace                   start           = null;
-    public PetriPlace                   end             = null;
-    public ArrayList<PetriTransition>   transitions     = new ArrayList<PetriTransition>();
-    public ArrayList<PetriPlace>        places          = new ArrayList<PetriPlace>();
+    public PetriPlace start = null;
+    public PetriPlace end = null;
+    public ArrayList<PetriTransition> transitions = new ArrayList<PetriTransition>();
+    public ArrayList<PetriPlace> places = new ArrayList<PetriPlace>();
     
     /**
      *  This is an empty constructor, that is used to instantiate a new instance
@@ -39,7 +34,7 @@ public class PetriGraph extends Graph
     }
     
     /**
-     *  This tries to retrieve a place, and if it has been assigned it will then
+     *  This tries to retrieve/set a place, and if it has been assigned it will then
      *  return it. However in the case that it hasn't been set and someone tries
      *  to get it, it will throw an exception as that is an illegal graph action
      */
@@ -52,6 +47,19 @@ public class PetriGraph extends Graph
         else
         {
             return (start);
+        }
+    }
+
+    // setStart
+    public PetriPlace setStart (PetriPlace inputStart)
+    {
+        if (inputStart == null)
+        {
+            throw new NullPointerException();
+        }
+        else
+        {
+            start = inputStart;
         }
     }
     
@@ -71,6 +79,19 @@ public class PetriGraph extends Graph
             return (end);
         }
     }
+
+    // setEnd
+    public PetriPlace setEnd (PetriPlace inputEnd)
+    {
+        if (inputEnd == null)
+        {
+            throw new NullPointerException();
+        }
+        else
+        {
+            end = inputEnd;
+        }
+    }
     
     /**
      *  This is a toString override. It creates a pretty print format of all the
@@ -84,7 +105,8 @@ public class PetriGraph extends Graph
      */
     public String toString ()
     {
-        String   result = "PetriGraph (start: " + (start == null ? "none" : "assigned") + ", end: " + (end == null ? "end" : "assigned") + ")";
+        String result = "PetriGraph (start: " + (start == null ? "none" : "assigned") +
+                        ", end: " + (end == null ? "end" : "assigned") + ")";
         
         result = result + "\n- Transitions:";
         
