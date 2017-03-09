@@ -1,4 +1,4 @@
-package interfaces;
+package petriNet.semantics.interfaces;
 
 import java.util.List;
 

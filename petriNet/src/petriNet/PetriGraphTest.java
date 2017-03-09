@@ -1,15 +1,8 @@
 package petriNet;
 
-import static org.junit.Assert.*;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.awt.Point;
+import java.awt.*;
 
 
 public class PetriGraphTest {
