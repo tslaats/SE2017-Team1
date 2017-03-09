@@ -1,3 +1,4 @@
+package petriNet;
 
 import java.util.ArrayList;
 import java.awt.Point;

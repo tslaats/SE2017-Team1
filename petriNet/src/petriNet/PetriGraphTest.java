@@ -59,7 +59,7 @@ public class PetriGraphTest {
      *
      */
     @Test
-    public void testPetriGraph1() {
+    public void testPetriGraph2() {
     	PetriGraph g = new PetriGraph();
         
         PetriTransition t02 = new PetriTransition( 2, new Point(109, 163), "Receive order");
@@ -72,7 +72,7 @@ public class PetriGraphTest {
      *
      */
     @Test
-    public void testPetriGraph1() {
+    public void testPetriGraph3() {
     	PetriGraph g = new PetriGraph();
         
         PetriTransition t02 = new PetriTransition( 2, new Point(109, 163), "Receive order");

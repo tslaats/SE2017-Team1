@@ -1,3 +1,4 @@
+package petriNet;
 
 /**
  *  @project >> Software Engineering 2017

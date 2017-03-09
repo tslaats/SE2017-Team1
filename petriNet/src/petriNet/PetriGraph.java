@@ -1,3 +1,4 @@
+package petriNet;
 
 /**
  *  @project >> Software Engineering 2017
@@ -51,7 +52,7 @@ public class PetriGraph extends Graph
     }
 
     // setStart
-    public PetriPlace setStart (PetriPlace inputStart)
+    public void setStart(PetriPlace inputStart)
     {
         if (inputStart == null)
         {
@@ -60,7 +61,7 @@ public class PetriGraph extends Graph
         else
         {
             start = inputStart;
-        }
+        };
     }
     
     /**
@@ -81,7 +82,7 @@ public class PetriGraph extends Graph
     }
 
     // setEnd
-    public PetriPlace setEnd (PetriPlace inputEnd)
+    public void setEnd(PetriPlace inputEnd)
     {
         if (inputEnd == null)
         {
