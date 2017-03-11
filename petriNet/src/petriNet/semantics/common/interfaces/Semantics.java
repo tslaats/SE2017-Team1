@@ -10,11 +10,11 @@ import petriNet.semantics.common.interfaces.Graph;
  *
  * It should be removed when the impl is ready and the common one used instead
  */
-public interface Semantics {
+public interface Semantics<T1> {
 		
-		public List<Graph> getPossibleActions(Graph graph);
+		public List<T1> getPossibleActions();
 
-		public Graph executeAction(Graph graph, List<String> ids);
+		public Graph executeAction(T1 object);
 		
-		public boolean isFinished(Graph graph);
+		public boolean isFinished();
 }

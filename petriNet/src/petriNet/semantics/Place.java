@@ -1,33 +1,23 @@
 package petriNet.semantics;
 
-/**
- * Created by Mihai on 3/9/2017.
- */
-public class Place extends PetriObject {
-    /**
-     * Marks if there is a token or not in this place
-     */
-    private boolean token;
+import java.awt.Point;
 
-    /**
-     * Constructor
-     *
-     * @param token
-     */
-    public Place(boolean token) {
-        this.token = token;
-    }
 
-    /**
-     * Checks token
-     *
-     * @return boolean
-     */
-    public boolean isToken() {
-        return token;
+public class Place
+{
+    public int id = -1;
+    public Point position = null;
+    public boolean token = false;
+    public Transition incoming = null;
+    public Transition outgoing = null;
+    
+    public Place (int id, Point position, boolean token, Transition incoming, Transition outgoing)
+    {
+        this.id         = id;
+        this.position   = position;
+        this.token      = token;
+        this.incoming   = incoming;
+        this.outgoing   = outgoing;
     }
-
-    public void setToken(boolean token) {
-        this.token = token;
-    }
+    
 }

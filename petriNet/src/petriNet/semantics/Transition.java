@@ -1,46 +1,31 @@
 package petriNet.semantics;
 
+import java.util.ArrayList;
+
 import petriNet.semantics.common.interfaces.CrGraph;
 
-/**
- * Created by Mihai on 3/9/2017.
- */
-public class Transition extends PetriObject {
-    /**
-     * Transition name
-     */
-    private final String name;
+import java.awt.Point;
 
-    /**
-     * CrGraph in this Transition
-     */
-    private final CrGraph crGraph;
 
-    /**
-     * Constructor
-     *
-     * @param name
-     * @param crGraph
-     */
-    public Transition(String name, CrGraph crGraph) {
+public class Transition
+{
+    public int id = -1;
+    public Point position = null;
+    public String name = null;
+    public ArrayList<Place> incoming = new ArrayList<Place>();
+    public ArrayList<Place> outgoing = new ArrayList<Place>();
+    public CrGraph graph;
+    
+  
+    public Transition (int id, Point position, String name,CrGraph graph )
+    {
+        this.id = id;
+        this.position = position;
         this.name = name;
-        this.crGraph = crGraph;
+        this.graph=graph;
     }
+    
 
-    /**
-     * This Transition name
-     * @return string
-     */
-    public String getName() {
-        return name;
-    }
+    
 
-    /**
-     * This Transition's crgraph
-     *
-     * @return object
-     */
-    public CrGraph getCrGraph() {
-        return crGraph;
-    }
 }
