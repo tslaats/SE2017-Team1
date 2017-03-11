@@ -1,7 +1,7 @@
 package petriNet.semantics;
 
 import petriNet.semantics.common.interfaces.CrGraph;
-import petriNet.semantics.common.interfaces.GraphObject;
+import petriNet.semantics.common.interfaces.Graph;
 import petriNet.semantics.common.interfaces.Semantics;
 
 import java.util.ArrayList;
@@ -146,19 +146,19 @@ public class Petrinet implements Semantics {
 
     // TODO
     @Override
-    public List<GraphObject> getPossibleActions(CrGraph graph) {
+    public List<Graph> getPossibleActions(Graph graph) {
         return null;
     }
 
     // TODO
     @Override
-    public CrGraph executeAction(CrGraph graph, List<String> ids) {
+    public Graph executeAction(Graph graph, List<String> ids) {
         return null;
     }
 
     // TODO
     @Override
-    public boolean isFinished(CrGraph graph) {
+    public boolean isFinished(Graph graph) {
         return false;
     }
 }
