@@ -15,8 +15,7 @@ import java.awt.Point;
  *  constructors that the user interface group needs to create, and populate the
  *  structure. This  includes transitions, places and indicators for start & end
  */
-public class PetriNet extends Graph
-{
+public class PetriNet extends Graph {
     public Place start = null;
     public Place end = null;
     public ArrayList<Transition> transitions = new ArrayList<Transition>();
@@ -34,8 +33,7 @@ public class PetriNet extends Graph
      *  at all. But the constructor still has to be defined, as we might need to
      *  implement more constructors or add additional auto-generated information
      */
-    public PetriNet ()
-    {
+    public PetriNet () {
         
     }
     
@@ -44,27 +42,21 @@ public class PetriNet extends Graph
      *  return it. However in the case that it hasn't been set and someone tries
      *  to get it, it will throw an exception as that is an illegal graph action
      */
-    public Place getStart ()
-    {
-        if (start == null)
-        {
+    public Place getStart () {
+        if (start == null) {
             throw new NullPointerException();
         }
-        else
-        {
+        else {
             return (start);
         }
     }
 
     // setStart
-    public void setStart(Place inputStart)
-    {
-        if (inputStart == null)
-        {
+    public void setStart(Place inputStart) {
+        if (inputStart == null) {
             throw new NullPointerException();
         }
-        else
-        {
+        else {
             start = inputStart;
         };
     }
@@ -74,27 +66,21 @@ public class PetriNet extends Graph
      *  return it. However in the case that it hasn't been set and someone tries
      *  to get it, it will throw an exception as that is an illegal graph action
      */
-    public Place getEnd ()
-    {
-        if (end == null)
-        {
+    public Place getEnd () {
+        if (end == null) {
             throw new NullPointerException();
         }
-        else
-        {
+        else {
             return (end);
         }
     }
 
     // setEnd
-    public void setEnd(Place inputEnd)
-    {
-        if (inputEnd == null)
-        {
+    public void setEnd(Place inputEnd) {
+        if (inputEnd == null) {
             throw new NullPointerException();
         }
-        else
-        {
+        else {
             end = inputEnd;
         }
     }
@@ -127,8 +113,7 @@ public class PetriNet extends Graph
      *  Since a start can be null, this getter allows a caller to check if there
      *  is actually anything assigned to the variable, or if it is actually null
      */
-    public boolean hasStart ()
-    {
+    public boolean hasStart () {
         return (start != null);
     }
     
@@ -136,8 +121,7 @@ public class PetriNet extends Graph
      *  Since an end can be null, this getter allows a caller, to check if there
      *  is actually anything assigned to the variable, or if it is actually null
      */
-    public boolean hasEnd ()
-    {
+    public boolean hasEnd () {
         return (end != null);
     }
     
@@ -151,22 +135,19 @@ public class PetriNet extends Graph
      *  even though it would be obvious. The format looks weird, but look at the
      *  course page, for a post about the format and how it looks after printing
      */
-    public String toString ()
-    {
+    public String toString () {
         String result = "Graph (start: " + (start == null ? "none" : "assigned") +
                         ", end: " + (end == null ? "end" : "assigned") + ")";
         
         result = result + "\n- Transitions:";
         
-        for (Transition t : transitions)
-        {
+        for (Transition t : transitions) {
             result = result + "\n    " + t;
         }
         
         result = result + "\n- Places:";
         
-        for (Place p : places)
-        {
+        for (Place p : places) {
             result = result + "\n    " + p;
         }
         

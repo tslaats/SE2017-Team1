@@ -28,8 +28,7 @@ public class draw extends Applet {
 	}
 	
 	
-	public static void main(String ad[])
-    {
+	public static void main(String ad[]) {
 		//Applet class calls function paint() for us
         JFrame jp1 = new JFrame();
         draw a = new draw ();

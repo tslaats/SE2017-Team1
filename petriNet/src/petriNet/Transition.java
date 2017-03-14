@@ -12,8 +12,7 @@ import java.awt.Point;
  *  a petri graph. The node contains a list of incoming- and a list of outgoing-
  *  edges (arcs), as well as a string name and the mandatory position coordinate
  */
-public class Transition
-{
+public class Transition {
     public int id = -1;
     public Point position = null;
     public String name = null;
@@ -25,8 +24,7 @@ public class Transition
      *  populates all of the variables, such as the top left point of the object
      *  and the given name of the transition, and every of the connecting places
      */
-    public Transition (int id, Point position, String name)
-    {
+    public Transition (int id, Point position, String name) {
         this.id = id;
         this.position = position;
         this.name = name;
@@ -37,8 +35,7 @@ public class Transition
      *  the node. It actually doesn't print, it's just a toString, sorry, my bad
      *  but yeah, so I wonder, does anyone even reads these comments I guess not
      */
-    public String toString ()
-    {
+    public String toString () {
         return ("Transition (Name: " + name + ", Id: " + id + ", IncomingSize: " +
                 incoming.size() + ", OutgoingSize: " + outgoing.size() +
                 ", Position: " + position.x + "," + position.y + ")");

@@ -13,7 +13,6 @@ import java.awt.Point;
  *  than being a super class to derive the two graph types from. This might help
  *  later, when a graph object actually have some shared properties that we need
  */
-public class Graph
-{
+public class Graph {
     
 }
