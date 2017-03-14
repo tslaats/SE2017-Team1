@@ -120,6 +120,24 @@ public class PetriNet extends Graph
     }
     
     /**
+     *  Since a start can be null, this getter allows a caller to check if there
+     *  is actually anything assigned to the variable, or if it is actually null
+     */
+    public boolean hasStart ()
+    {
+        return (start != null);
+    }
+    
+    /**
+     *  Since an end can be null, this getter allows a caller, to check if there
+     *  is actually anything assigned to the variable, or if it is actually null
+     */
+    public boolean hasEnd ()
+    {
+        return (end != null);
+    }
+    
+    /**
      *  This is a toString override. It creates a pretty print format of all the
      *  content. It even handles the cases where the start and end points appear
      *  as null values. It creates a nice multi-line formatted structure, whitch
