@@ -3,9 +3,8 @@ package petriNet.semantics;
 import petriNet.Graph;
 import petriNet.semantics.common.interfaces.Semantics;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import java.util.function.Predicate;
 
 /**
  * Some methods return the same instance to enable "chaining"
@@ -94,7 +93,7 @@ public class Petrinet extends Graph implements Semantics<Place>  {
 	/**
 	 * Adds a single transition
 	 *
-	 * @param Transition
+	 * @param transition
 	 * @return Petrinet
 	 */
 	public Petrinet addTransition(Transition transition) {
@@ -146,53 +145,24 @@ public class Petrinet extends Graph implements Semantics<Place>  {
 
 	@Override
 	public List<Place> getPossibleActions() {
-		boolean token = false;
-		Transition trans = null;
-		Iterator<Place> it = places.iterator();
-		while (!token && it.hasNext()) {
-			Place i = it.next();
-			if (i.token) {
-				token = true;
-				trans = i.outgoing;
-			}
-		}
-		if (trans != null) {
-			if (trans.graph.isFinished()) {
-				return trans.outgoing;
-			}
-		}
-		return null;
+		// Better to return an empty list than null
+		Predicate<Place> p = x -> x.token && x.outgoing.graph.isFinished();
+
+		return places.stream().anyMatch(p) ? places.stream().filter(p).findFirst().get().outgoing.outgoing : Collections.emptyList();
 	}
 
 	@Override
 	public boolean isFinished() {
-		return end.token;
+		return places.stream().filter(x -> x.id == end.id).findFirst().map(p -> p.token).orElse(false);
 	}
 
 	@Override
 	public Graph executeAction(Place place) {
-		//we assume that the place asked is a valid plac
-		boolean token = false;
-		boolean found = false;
-		Iterator<Place> it = places.iterator();
-		Place i = null;
-		Place equals = null;
-		while (!token && it.hasNext() || !found && it.hasNext()) {
-			i = it.next();
-			if (i.token) {
-				token = true;
-				i.token = false;
-			}
-			if(i.equals(place)){
-				found = true;
-				equals = i;
-			}
-		}
-		if(found){
-			i.token = false;
-			equals.token = true;
-		}
-		
+		//we assume that the place asked is a valid place
+		places.stream().filter(p -> p.token || p.id == place.id).forEach(p -> {
+			p.token = !(p.token && p.id != place.id);
+		});
+
 		return this;
 	}
 }
