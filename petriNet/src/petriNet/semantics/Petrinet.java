@@ -166,15 +166,27 @@ public class Petrinet extends Graph implements Semantics<Place>  {
 
 	@Override
 	public boolean isFinished() {
-		if(end.token){
-			return true;
+		
+		boolean found = false;
+		Place i = null;
+		Iterator<Place> it = places.iterator();
+		while (!found && it.hasNext()) {
+			i = it.next();
+			if (it.equals(end)) {
+				found = true;
+			}
+		}
+		
+		if(found){
+			if(i.token)
+				return true;
 		}
 		return false;
 	}
 
 	@Override
 	public Graph executeAction(Place place) {
-		//we assume that the place asked is a valid plac
+		//we assume that the place asked is a valid place
 		boolean token = false;
 		boolean found = false;
 		Iterator<Place> it = places.iterator();
