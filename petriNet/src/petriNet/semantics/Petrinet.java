@@ -42,7 +42,7 @@ public class Petrinet extends Graph implements Semantics<Place>  {
 	/**
 	 * Singleton constructor
 	 */
-	protected Petrinet() {
+	public Petrinet() {
 		// Exists only to defeat instantiation.
 	}
 
@@ -139,7 +139,7 @@ public class Petrinet extends Graph implements Semantics<Place>  {
 	 * @param places
 	 * @return List<Place>
 	 */
-	public Petrinet addPlace(List<Place> places) {
+	public Petrinet addPlaces(List<Place> places) {
 		this.places.addAll(places);
 		return this;
 	}
