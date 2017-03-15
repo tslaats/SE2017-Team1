@@ -166,10 +166,7 @@ public class Petrinet extends Graph implements Semantics<Place>  {
 
 	@Override
 	public boolean isFinished() {
-		if(end.token){
-			return true;
-		}
-		return false;
+		return end.token;
 	}
 
 	@Override
