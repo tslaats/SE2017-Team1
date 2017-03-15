@@ -174,7 +174,7 @@ public class Petrinet extends Graph implements Semantics<Place>  {
 
 	@Override
 	public Graph executeAction(Place place) {
-		//we assume that the place asked is a valid place
+		//we assume that the place asked is a valid plac
 		boolean token = false;
 		boolean found = false;
 		Iterator<Place> it = places.iterator();

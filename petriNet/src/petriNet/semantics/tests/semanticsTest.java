@@ -27,7 +27,7 @@ public class semanticsTest {
 
 		g = new Petrinet();
 		CrGraph cr = new CrGraph();
-
+		
 		Transition t02 = new Transition(2, new Point(109, 163), "Receive order", cr);
 		Transition t05 = new Transition(5, new Point(206, 114), "Ship order", cr);
 		Transition t07 = new Transition(7, new Point(350, 218), "Questionnaire", cr);
@@ -110,8 +110,6 @@ public class semanticsTest {
 	@Test
 	public void testGetPossibleActions() {
 		List<Place> possibleActions = g.getPossibleActions();
-		//System.out.println(g.getPlaces().size());
-		//System.out.println(possibleActions.size());
 
 		for (Place a : possibleActions) {
 			System.out.println(a.id);
