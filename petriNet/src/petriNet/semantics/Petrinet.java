@@ -1,6 +1,6 @@
 package petriNet.semantics;
 
-import petriNet.semantics.common.interfaces.Graph;
+import petriNet.Graph;
 import petriNet.semantics.common.interfaces.Semantics;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.List;
  *
  * Created by Mihai on 3/9/2017.
  */
-public class Petrinet implements Semantics<Place> {
+public class Petrinet extends Graph implements Semantics<Place>  {
 
 	/**
 	 * Start of the Petrinet
@@ -144,7 +144,6 @@ public class Petrinet implements Semantics<Place> {
 		return this;
 	}
 
-	// TODO
 	@Override
 	public List<Place> getPossibleActions() {
 		boolean token = false;
@@ -158,22 +157,45 @@ public class Petrinet implements Semantics<Place> {
 			}
 		}
 		if (trans != null) {
-			if (trans.graph.check()) {
+			if (trans.graph.isFinished()) {
 				return trans.outgoing;
 			}
 		}
 		return null;
 	}
 
-	// TODO
 	@Override
 	public boolean isFinished() {
+		if(end.token){
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public Graph executeAction(Place place) {
-		// TODO Auto-generated method stub
-		return null;
+		//we assume that the place asked is a valid place
+		boolean token = false;
+		boolean found = false;
+		Iterator<Place> it = places.iterator();
+		Place i = null;
+		Place equals = null;
+		while (!token && it.hasNext() || !found && it.hasNext()) {
+			i = it.next();
+			if (i.token) {
+				token = true;
+				i.token = false;
+			}
+			if(i.equals(place)){
+				found = true;
+				equals = i;
+			}
+		}
+		if(found){
+			i.token = false;
+			equals.token = true;
+		}
+		
+		return this;
 	}
 }
