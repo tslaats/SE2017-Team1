@@ -1,4 +1,4 @@
-package petriNet.semantics.interfaces;
+package interfaces;
 
 public interface GraphObject {
 	

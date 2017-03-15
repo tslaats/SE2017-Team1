@@ -1,4 +1,4 @@
-package petriNet.semantics.interfaces;
+package interfaces;
 
 import java.util.List;
 
@@ -9,4 +9,61 @@ public interface Semantics {
 	public Graph executeAction(Graph graph, List<String> ids);
 	
 	public boolean isFinished(Graph graph);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
