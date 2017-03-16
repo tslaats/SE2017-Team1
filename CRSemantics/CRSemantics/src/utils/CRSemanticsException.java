@@ -11,7 +11,7 @@ public class CRSemanticsException extends Exception{
 		super(message);
 	}
 	
-	CRSemanticsException(String message, Throwable cause) {
+	public CRSemanticsException(String message, Throwable cause) {
 		super(message, cause);
 	}
 

@@ -4,11 +4,11 @@ import java.util.List;
 
 public interface Semantics {
 	
-	public List<GraphObject> getPossibleActions(Graph graph);
+	public List<int> getPossibleActions(Graph graph) throws Exception;
 
-	public Graph executeAction(Graph graph, List<String> ids);
+	public Graph executeAction(Graph graph, List<int> ids) throws Exception;
 	
-	public boolean isFinished(Graph graph);
+	public boolean isFinished(Graph graph) throws Exception;
 	
 	
 	
