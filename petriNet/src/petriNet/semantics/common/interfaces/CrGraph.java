@@ -1,7 +1,7 @@
 package petriNet.semantics.common.interfaces;
 
 import java.util.List;
-import petriNet.Graph;
+import petriNet.visualization.Graph;
 
 /**
  * Created by Mihai on 3/9/2017.
