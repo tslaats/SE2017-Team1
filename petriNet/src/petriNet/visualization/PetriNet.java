@@ -1,4 +1,4 @@
-package petriNet;
+package petriNet.visualization;
 
 /**
  *  @project >> Software Engineering 2017
@@ -16,10 +16,10 @@ import java.awt.Point;
  *  structure. This  includes transitions, places and indicators for start & end
  */
 public class PetriNet extends Graph {
-    public Place start = null;
-    public Place end = null;
-    public ArrayList<Transition> transitions = new ArrayList<Transition>();
-    public ArrayList<Place> places = new ArrayList<Place>();
+    private Place start = null;
+    private Place end = null;
+    private ArrayList<Transition> transitions = new ArrayList<Transition>();
+    private ArrayList<Place> places = new ArrayList<Place>();
 
     // Change this later, when size of objects have been decided.
     double box_width = 100; double box_height = 50;

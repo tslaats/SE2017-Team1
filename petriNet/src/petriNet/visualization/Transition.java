@@ -1,4 +1,4 @@
-package petriNet;
+package petriNet.visualization;
 /**
  *  @project >> Software Engineering 2017
  *  @authors >> Emil, Frederik, Mads, Susanne, Philip Falck
@@ -13,11 +13,11 @@ import java.awt.Point;
  *  edges (arcs), as well as a string name and the mandatory position coordinate
  */
 public class Transition {
-    public int id = -1;
-    public Point position = null;
-    public String name = null;
-    public ArrayList<Place> incoming = new ArrayList<Place>();
-    public ArrayList<Place> outgoing = new ArrayList<Place>();
+    private int id = -1;
+    private Point position = null;
+    private String name = null;
+    private ArrayList<Place> incoming = new ArrayList<Place>();
+    private ArrayList<Place> outgoing = new ArrayList<Place>();
     
     /**
      *  This is a constructor, that creates a new instance of the transition and
@@ -28,6 +28,58 @@ public class Transition {
         this.id = id;
         this.position = position;
         this.name = name;
+    }
+    
+    public int getId() {
+    	return id;
+    }
+    
+    public Point getPosition() {
+    	return position;
+    }
+    
+    public String getName() {
+    	return name;
+    }
+    
+    public ArrayList<Place> getIncoming() {
+    	return incoming;
+    }
+    
+    public ArrayList<Place> getOutgoing() {
+    	return outgoing;
+    }
+    
+    public void setPosition(Point position) {
+    	this.position = position;
+    }
+    
+    public void setName(String name) {
+    	this.name = name;
+    }
+    
+    public void removeIncoming(ArrayList<Place> toBeRemoved) {
+    	incoming.removeAll(toBeRemoved);
+    }
+    
+    public void removeOutgoing(ArrayList<Place> toBeRemoved) {
+    	outgoing.removeAll(toBeRemoved);
+    }
+    
+    public void addIncoming(ArrayList<Place> toBeAdded) {
+    	incoming.addAll(toBeAdded);
+    }
+    
+    public void addOutgoing(ArrayList<Place> toBeAdded) {
+    	outgoing.addAll(toBeAdded);
+    }
+    
+    public void setIncoming(ArrayList<Place> incoming) {
+    	this.incoming = incoming;
+    }
+    
+    public void setOutgoing(ArrayList<Place> outgoing) {
+    	this.outgoing = outgoing;
     }
     
     /**
