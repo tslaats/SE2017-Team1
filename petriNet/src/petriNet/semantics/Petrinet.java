@@ -1,6 +1,6 @@
 package petriNet.semantics;
 
-import petriNet.visualization.Graph;
+import petriNet.visualization.petriNet.Graph;
 import petriNet.semantics.common.interfaces.Semantics;
 
 import java.util.*;
