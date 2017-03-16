@@ -1,4 +1,4 @@
-package petriNet;
+package petriNet.visualization;
 
 import java.util.ArrayList;
 import java.awt.Point;

@@ -1,4 +1,4 @@
-package petriNet;
+package petriNet.visualization;
 
 /**
  *  @project >> Software Engineering 2017
@@ -16,11 +16,11 @@ import java.awt.Point;
  *  place objects can actually have more than one outgoing / incoming connection
  */
 public class Place {
-    public int id = -1;
-    public Point position = null;
-    public boolean token = false;
-    public Transition incoming = null;
-    public Transition outgoing = null;
+    private int id = -1;
+    private Point position = null;
+    private boolean token = false;
+    private Transition incoming = null;
+    private Transition outgoing = null;
     
     /**
      *  This is a constructor that creates a new instance of the place class and
@@ -33,6 +33,46 @@ public class Place {
         this.token      = token;
         this.incoming   = incoming;
         this.outgoing   = outgoing;
+    }
+    
+    public int getId() {
+    	return id;
+    }
+    
+    public Point getPosition() {
+    	return position;
+    }
+    
+    public Transition getIncoming() {
+    	return incoming;
+    }
+    
+    public Transition getOutgoing() {
+    	return outgoing;
+    }
+    
+    public boolean getToken() {
+    	return token;
+    }
+    
+    public void setPosition(Point position) {
+    	this.position = position;
+    }
+    
+    public void setIncoming(Transition incoming) {
+    	this.incoming = incoming;
+    }
+    
+    public void setOutgoing(Transition outgoing) {
+    	this.outgoing = outgoing;
+    }
+    
+    public void setToken(boolean token) {
+    	this.token = token;
+    }
+    
+    public void toggleToken() {
+    	token = !token;
     }
     
     /**
