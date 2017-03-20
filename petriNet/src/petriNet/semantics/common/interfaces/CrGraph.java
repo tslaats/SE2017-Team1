@@ -1,9 +1,30 @@
 package petriNet.semantics.common.interfaces;
 
+import java.util.List;
+import petriNet.visualization.petriNet.Graph;
+
+
 /**
  * Created by Mihai on 3/9/2017.
  */
-public interface CrGraph {
+public class CrGraph implements Semantics {
 	
-	public boolean check ();
+
+	@Override
+	public List getPossibleActions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Graph executeAction(Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isFinished() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

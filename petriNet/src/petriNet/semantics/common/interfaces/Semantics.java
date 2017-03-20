@@ -2,7 +2,8 @@ package petriNet.semantics.common.interfaces;
 
 import java.util.List;
 
-import petriNet.semantics.common.interfaces.Graph;
+import petriNet.visualization.petriNet.Graph;
+
 
 
 /**

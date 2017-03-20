@@ -1,4 +1,4 @@
-package petriNet;
+package petriNet.visualization;
 
 import java.util.ArrayList;
 import java.awt.Point;
@@ -8,10 +8,9 @@ import java.awt.Point;
  *  anything else. It manually setups the petri graph that has been shown in the
  *  lecture 3 slides, page 22 / 77. It creates the graph, and then pretty prints
  */
-public class Main
-{
-    public static void main (String[] args)
-    {
+public class Main {
+
+    public static void main (String[] args) {
     	PetriNet g = new PetriNet();
         
         Transition t02 = new Transition( 2, new Point(109, 163), "Receive order");

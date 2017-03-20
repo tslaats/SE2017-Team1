@@ -1,6 +1,7 @@
 package petriNet.semantics;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import petriNet.semantics.common.interfaces.CrGraph;
 
@@ -23,8 +24,17 @@ public class Transition
         this.position = position;
         this.name = name;
         this.graph=graph;
+        
+        this.outgoing = (ArrayList<Place>) outgoing;
     }
     
+    public void addIncoming (List<Place>incoming){
+    	this.incoming =(ArrayList<Place>) incoming;
+    }
+    
+    public void addOutgoing (List<Place>outgoing){
+    	this.outgoing =(ArrayList<Place>) outgoing;
+    }
 
     
 

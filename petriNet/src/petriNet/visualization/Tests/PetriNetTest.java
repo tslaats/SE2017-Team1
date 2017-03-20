@@ -1,4 +1,4 @@
-package petriNet;
+package petriNet.visualization;
 
 import static org.junit.Assert.*;
 

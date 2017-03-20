@@ -1,18 +1,17 @@
 package petriNet.semantics;
 
-import petriNet.semantics.common.interfaces.Graph;
+import petriNet.visualization.petriNet.Graph;
 import petriNet.semantics.common.interfaces.Semantics;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import java.util.function.Predicate;
 
 /**
  * Some methods return the same instance to enable "chaining"
  *
  * Created by Mihai on 3/9/2017.
  */
-public class Petrinet implements Semantics<Place> {
+public class Petrinet extends Graph implements Semantics<Place>  {
 
 	/**
 	 * Start of the Petrinet
@@ -42,7 +41,7 @@ public class Petrinet implements Semantics<Place> {
 	/**
 	 * Singleton constructor
 	 */
-	protected Petrinet() {
+	public Petrinet() {
 		// Exists only to defeat instantiation.
 	}
 
@@ -94,7 +93,7 @@ public class Petrinet implements Semantics<Place> {
 	/**
 	 * Adds a single transition
 	 *
-	 * @param Transition
+	 * @param transition
 	 * @return Petrinet
 	 */
 	public Petrinet addTransition(Transition transition) {
@@ -139,41 +138,31 @@ public class Petrinet implements Semantics<Place> {
 	 * @param places
 	 * @return List<Place>
 	 */
-	public Petrinet addPlace(List<Place> places) {
+	public Petrinet addPlaces(List<Place> places) {
 		this.places.addAll(places);
 		return this;
 	}
 
-	// TODO
 	@Override
 	public List<Place> getPossibleActions() {
-		boolean token = false;
-		Transition trans = null;
-		Iterator<Place> it = places.iterator();
-		while (!token && it.hasNext()) {
-			Place i = it.next();
-			if (i.token) {
-				token = true;
-				trans = i.outgoing;
-			}
-		}
-		if (trans != null) {
-			if (trans.graph.check()) {
-				return trans.outgoing;
-			}
-		}
-		return null;
+		// Better to return an empty list than null
+		Predicate<Place> p = x -> x.token && x.outgoing.graph.isFinished();
+
+		return places.stream().anyMatch(p) ? places.stream().filter(p).findFirst().get().outgoing.outgoing : Collections.emptyList();
 	}
 
-	// TODO
 	@Override
 	public boolean isFinished() {
-		return false;
+		return places.stream().filter(x -> x.id == end.id).findFirst().map(p -> p.token).orElse(false);
 	}
 
 	@Override
 	public Graph executeAction(Place place) {
-		// TODO Auto-generated method stub
-		return null;
+		//we assume that the place asked is a valid place
+		places.stream().filter(p -> p.token || p.id == place.id).forEach(p -> {
+			p.token = !(p.token && p.id != place.id);
+		});
+
+		return this;
 	}
 }
