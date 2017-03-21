@@ -1,4 +1,4 @@
-package petriNet.visualization;
+package petriNet.visualization.petriNet;
 
 
 import javax.swing.*;
@@ -13,7 +13,7 @@ import java.awt.geom.Ellipse2D;
 public class draw_place{
     private Point coord;
     private int diameter = 30;
-    private int place_id = null;
+    private int place_id;
     
 
     public draw_place(Point c, int place_id){

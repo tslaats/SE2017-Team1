@@ -1,4 +1,4 @@
-package petriNet.visualization;
+package petriNet.visualization.petriNet;
 
 /**
  *  @project >> Software Engineering 2017

@@ -1,7 +1,8 @@
-package petriNet.visualization;
+package petriNet.visualization.petriNet;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Line2D;
 
 
 public class draw_connection{

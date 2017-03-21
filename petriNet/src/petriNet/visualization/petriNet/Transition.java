@@ -1,4 +1,4 @@
-package petriNet.visualization;
+package petriNet.visualization.petriNet;
 /**
  *  @project >> Software Engineering 2017
  *  @authors >> Emil, Frederik, Mads, Susanne, Philip Falck
@@ -81,6 +81,7 @@ public class Transition {
     public void setOutgoing(ArrayList<Place> outgoing) {
     	this.outgoing = outgoing;
     }
+    
     
     /**
      *  This is a debugging method, for printing out a textual representation of

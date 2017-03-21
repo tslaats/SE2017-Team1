@@ -1,4 +1,4 @@
-package petriNet.visualization;
+package petriNet.visualization.Tests;
 
 import static org.junit.Assert.*;
 
@@ -8,7 +8,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import petriNet.visualization.petriNet.PetriNet;
+import petriNet.visualization.petriNet.Place;
+import petriNet.visualization.petriNet.Transition;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.awt.Point;
 
 
@@ -60,8 +65,8 @@ public class PetriNetTest {
         g.setStart(p01);
         g.setEnd(p12);
         
-        ArrayList<Transition> transitions = g.getTransitions();
-        ArrayList<Place> places = g.getPlaces();
+        Collection<Transition> transitions = g.getTransitions();
+        Collection<Place> places = g.getPlaces();
         
         assertEquals(p12,g.getEnd());
         assertEquals(p01,g.getStart());
@@ -81,8 +86,8 @@ public class PetriNetTest {
         
         g.addSingleTransition(t02);
         
-        ArrayList<Transition> transitions = g.getTransitions();
-        ArrayList<Place> places = g.getPlaces();
+        Collection<Transition> transitions = g.getTransitions();
+        Collection<Place> places = g.getPlaces();
         
         assertTrue(transitions.contains(t02) && transitions.size() == 1);
         assertTrue(places.size() == 0);
@@ -114,8 +119,8 @@ public class PetriNetTest {
         g.setStart(p01);
         g.setEnd(p03);
         
-        ArrayList<Transition> transitions = g.getTransitions();
-        ArrayList<Place> places = g.getPlaces();
+        Collection<Transition> transitions = g.getTransitions();
+        Collection<Place> places = g.getPlaces();
         
         assertEquals(p03,g.getEnd());
         assertEquals(p01,g.getStart());

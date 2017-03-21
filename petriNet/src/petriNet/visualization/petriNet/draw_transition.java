@@ -1,4 +1,4 @@
-package petriNet.visualization;
+package petriNet.visualization.petriNet;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +12,7 @@ public class draw_transition extends JPanel{
     private Point coord;
     private int width = 20;
     private int height = 50;
-    private int transition_id = null;
+    private int transition_id;
 
     public draw_transition(Point p, int id){
         coord = p;
