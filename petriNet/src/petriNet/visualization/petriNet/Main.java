@@ -43,7 +43,12 @@ public class Main {
         
         g.start = p01;
         g.end   = p12;
-        
+
         System.out.println(g);
+
+
+        JFrame frame = new JFrame("Test");
+        together p = new together(g);
+
     }
 }
