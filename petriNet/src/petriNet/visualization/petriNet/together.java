@@ -1,3 +1,5 @@
+package petriNet.src.petriNet.visualization.petriNet;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;

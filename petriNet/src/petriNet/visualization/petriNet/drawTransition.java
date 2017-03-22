@@ -1,4 +1,5 @@
-import javax.swing.*;
+package petriNet.src.petriNet.visualization.petriNet;
+
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
