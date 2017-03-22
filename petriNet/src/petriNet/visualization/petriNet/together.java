@@ -1,51 +1,44 @@
-package petriNet.visualization.petriNet;
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by root on 3/14/17.
  */
 public class together extends JPanel{
     private PetriNet p_net;
-    private ArrayList<draw_connection> connections;
+    private ArrayList<drawConnection> connections;
 
     public together(PetriNet p_net){
         this.p_net = p_net;
+        this.connections = new ArrayList<>();
     }
 
-    private void gen_connection(HashMap map, Transition t){
+    private void genConnection(Transition t){
 	ArrayList<Place> incoming = t.getIncoming();
 	ArrayList<Place> outgoing = t.getOutgoing();
 	Point p = t.getPosition();
-	
-	System.out.println("incoming size is: " + incoming.size());
-	System.out.println("outgoing size is: " + outgoing.size());
-	
-	for (int i = 0; i < incoming.size(); i++) {
-			Point p_incoming = incoming.get(i).getPosition();//(map.get(incoming.get(i).getId())).getPosition();
-		    draw_connection conn = new draw_connection(p_incoming, p, incoming.get(i).getId(), t.getId());
-		    connections.add(conn);
+
+	for (Place place : incoming) {
+        Point pIncoming = place.getPosition();
+        drawConnection conn = new drawConnection(pIncoming, p, place.getId(), t.getId());
+        this.connections.add(conn);
 	}
-	for (int i = 0; i < outgoing.size(); i++) {
-			Point p_outgoing = ((Place) map.get(outgoing.get(i))).getPosition();
-			draw_connection conn = new draw_connection(p, p_outgoing, t.getId(), outgoing.get(i).getId());
-			connections.add(conn);
-		System.out.println("run: " + i);
-	}
+	for (Place place : outgoing) {
+		Point pOutgoing = place.getPosition();
+        drawConnection conn = new drawConnection(p, pOutgoing, t.getId(), place.getId());
+        this.connections.add(conn);
+	    }
     }
 
     public void generate_connections(){
-        ArrayList<draw_connection> list = new ArrayList<draw_connection>();
+        ArrayList<drawConnection> list = new ArrayList<>();
         ArrayList<Transition> transitions = p_net.getTransitions();
         ArrayList<Place> place = p_net.getPlaces();
 
         HashMap map = new HashMap(place.size() + transitions.size());
-        HashMap used_id = new HashMap(place.size() + transitions.size());
+        HashMap usedId = new HashMap(place.size() + transitions.size());
 
         for (int i = 0; i < transitions.size(); i++) {
             Transition t = transitions.get(i);
@@ -62,13 +55,12 @@ public class together extends JPanel{
         for (int i = 0; i < transitions.size(); i++) {
             Transition t = transitions.get(i);
             int t_id = t.getId();
-            if (used_id.containsKey(t_id)){
+            if (usedId.containsKey(t_id)){
                 ;
             }
             else {
-            	System.out.println(t);
-            	gen_connection(map, t);
-            	used_id.put(t_id, t_id);
+            	genConnection(t);
+            	usedId.put(t_id, t_id);
             }
         }
 
@@ -79,17 +71,18 @@ public class together extends JPanel{
     public void paint(Graphics g){
     	ArrayList<Transition> transitions = p_net.getTransitions();
     	ArrayList<Place> place = p_net.getPlaces();
-	
-    	System.out.println(connections.size());
-    	/*for (int i = 0; i < connections.size(); i++) {
-    		draw_connection c = connections.get(i);
+
+    	for (int i = 0; i < connections.size(); i++) {
+            drawConnection c = connections.get(i);
     		c.paint(g);
-    	}*/
-    	/*for (int i = 0; i < transitions.size(); i++) {
-    		//draw_transition c = transitions.get(i);
-    		c.paint(g);
-    	}*/
-	
-        
+    	}
+    	for (int i = 0; i < transitions.size(); i++) {
+    		drawTransition t = new drawTransition(transitions.get(i));
+    		t.paint(g);
+    	}
+        for (int i = 0; i < place.size(); i++) {
+            drawPlace p = new drawPlace(place.get(i));
+            p.paint(g);
+        }
     }
 }
