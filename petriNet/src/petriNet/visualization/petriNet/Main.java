@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collection;
+package petriNet.src.petriNet.visualization.petriNet;
 
 import javax.swing.JFrame;
 

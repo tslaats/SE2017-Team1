@@ -1,3 +1,5 @@
+package petriNet.src.petriNet.visualization.petriNet;
+
 import java.awt.*;
 import java.awt.geom.Line2D;
 
