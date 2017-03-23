@@ -60,7 +60,8 @@ public class Unittests {
 		CRSemantics crSemantics = new CRSemantics();
 
 		// Try to execute an event that depends on another event to be executed first
-		List<Integer> actionsToExecute = new ArrayList<>(1);
+		List<Integer> actionsToExecute = new ArrayList<>();
+		actionsToExecute.add(1);
 		try {
 			crSemantics.executeAction(graph, actionsToExecute);
 		}
@@ -108,7 +109,8 @@ public class Unittests {
 		// Try to execute an event that does not depend on another event to be executed first
 		List<Integer> actionsToExecute = new ArrayList<>();
 		actionsToExecute.add(1);
-		crSemantics.executeAction(graph, actionsToExecute);
+		ConresGraph newGraph = crSemantics.executeAction(graph, actionsToExecute);
+		assertTrue(newGraph.activities.get(1).isExecuted);
 	}
 
 	@Test
@@ -125,6 +127,7 @@ public class Unittests {
 		// Try to execute a lone event
 		List<Integer> actionsToExecute = new ArrayList<>();
 		actionsToExecute.add(0);
-		crSemantics.executeAction(graph, actionsToExecute);
+		ConresGraph newGraph = crSemantics.executeAction(graph, actionsToExecute);
+		assertTrue(newGraph.activities.get(0).isExecuted);
 	}
 }
