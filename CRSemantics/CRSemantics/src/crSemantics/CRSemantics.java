@@ -77,38 +77,38 @@ public class CRSemantics implements Semantics {
     	}catch(Exception e){
     		throw new Exception("This is not a CRGraph");
     	}
-    	
+
     	if(ids.isEmpty())
     		throw new Exception(ExceptionTags.EmptyListException.toString());
-    	
+
     	// Its nested graph activities that needs execution
     	if(ids.size() > 1){
     		for(int i = 0; i < crGraph.activities.size(); i++){
     			if(crGraph.activities.get(i).id == ids.get(0)){
-    				
+
     				//TODO check all condition relations
     				ConresActivity activity = crGraph.activities.get(i);
     				if (!noBlockingConditions(activity, crGraph)){
     					throw new Exception("Blocking condition relation");
     				}
-    				
+
     				//Check that is has a nested Graph
 
     				if(activity.nestedGraph == null){
     					throw new Exception("There is no nested graph for given id");
     				}
-    				
+
     				Semantics semantics = semanticsFactory.getSemantics(activity.nestedGraph);
-    				
+
     				ids.remove(0);
-    				
+
     				activity.nestedGraph = semantics.executeAction(activity.nestedGraph, ids);
-    				
+
     			}
     		}
-    		
+
         }
-    	
+
     	// Its activity in this graph that needs execution
     	if (ids.size() == 1){
     		for (int i = 0; i < crGraph.activities.size(); i++){
@@ -116,29 +116,29 @@ public class CRSemantics implements Semantics {
     				ConresActivity activity = crGraph.activities.get(i);
     				activity.isExecuted = true;
     				activity.isPending = false;
-    				
+
     				//Check all condition relations
     				if(!noBlockingConditions(activity, crGraph)){
     					throw new Exception(ExceptionTags.InvalidActionException.toString());
-    				}  				
-    				
-    				//Check if it makes anything pending, and mark them as pending  				
+    				}
+
+    				//Check if it makes anything pending, and mark them as pending
     				makeActivitiesPending(activity, crGraph);
-    				
+
     			}
     		}
     	}
         return crGraph;
     }
-    
-    // Function used to Response relations 
+
+    // Function used to Response relations
     private void makeActivitiesPending(ConresActivity activity, ConresGraph crGraph) {
     	for (int i = 0; i < crGraph.relations.size(); i++){
     		ConresRelation relation = crGraph.relations.get(i);
     		if(relation.parent.id == activity.id && relation.type == Type.RESPONSE){
     			relation.child.isPending = true;
     		}
-    	}	
+    	}
 	}
 
     // Function to check for any not done conditions
@@ -149,7 +149,7 @@ public class CRSemantics implements Semantics {
 				return false;
 			}
 			else if(relation.child.id == activity.id && relation.type == Type.CONDITION && relation.parent.isExecuted){
-				
+
 				if(!noBlockingConditions(relation.parent, crGraph)){
 					return false;
 				}

@@ -1,5 +1,6 @@
 package testing;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.Point;
@@ -36,8 +37,8 @@ public class Unittests {
 			crSemantics.executeAction(graph, actionsToExecute);
 		}
 		catch(Exception e) {
-			if(ExceptionTags.InvalidActionException.equalsName(e.getMessage()))
-				assertTrue(true);
+			assertEquals(e.getMessage(), ExceptionTags.InvalidActionException);
+			return;
 		}
 		assertTrue(false);
 	}
@@ -52,8 +53,9 @@ public class Unittests {
 			crSemantics.executeAction(new ConresGraph(new ArrayList<ConresActivity>(), new ArrayList<ConresRelation>()), new ArrayList<Integer>());
 		}
 		catch(Exception e) {
-			if(ExceptionTags.EmptyListException.equalsName(e.getMessage()))
-				assertTrue(true);
+			//System.out.println(e.getMessage());
+			assertEquals(e.getMessage(), ExceptionTags.EmptyListException.toString());
+			return;
 		}
 		assertTrue(false);
 	}
@@ -76,7 +78,8 @@ public class Unittests {
 		CRSemantics crSemantics = new CRSemantics();
 
 		// Try to execute an event that does not depend on another event to be executed first
-		List<Integer> actionsToExecute = new ArrayList<>(1);
+		List<Integer> actionsToExecute = new ArrayList<>();
+		actionsToExecute.add(1);
 		crSemantics.executeAction(graph, actionsToExecute);
 	}
 
@@ -92,7 +95,8 @@ public class Unittests {
 		CRSemantics crSemantics = new CRSemantics();
 
 		// Try to execute a lone event
-		List<Integer> actionsToExecute = new ArrayList<>(1);
+		List<Integer> actionsToExecute = new ArrayList<>();
+		actionsToExecute.add(0);
 		crSemantics.executeAction(graph, actionsToExecute);
 	}
 }
