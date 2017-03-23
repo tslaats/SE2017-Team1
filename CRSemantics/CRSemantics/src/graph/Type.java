@@ -1,5 +1,6 @@
 package graph;
 
 public enum Type {
-	CONDITION
+	CONDITION,
+	RELATION
 }

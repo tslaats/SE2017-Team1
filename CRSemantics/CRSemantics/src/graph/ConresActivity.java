@@ -11,8 +11,17 @@ public class ConresActivity {
     public boolean isPending;
     public Graph nestedGraph;
 
-    public ConresActivity(int id, Point position, String name, String role);
+    public ConresActivity(int id, Point position, String name, String role, boolean isPending, Graph nestedGraph){
+        this.id = id;
+        this.position = position;
+        this.name = name;
+        this.role = role;
+        this.isPending = isPending;
+        this.nestedGraph = nestedGraph;
+        this.isExecuted = false;
+    }
 
-    public String toString();
+    public String toString(){
+        return " ";
+    }
 }
-S
