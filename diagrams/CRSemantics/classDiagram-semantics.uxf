@@ -4,18 +4,18 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>150</x>
+      <x>160</x>
       <y>360</y>
-      <w>280</w>
+      <w>290</w>
       <h>120</h>
     </coordinates>
     <panel_attributes>ConresSemantics
 --
-
++ factory : SemanticsFactory
 --
-getPossibleActions() : ArrayList&lt;int&gt; 
-executeAction() : Graph
-isFinished() : boolean
++ getPossibleActions() : ArrayList&lt;int&gt; 
++ executeAction() : Graph
++ isFinished() : boolean
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -24,15 +24,15 @@ isFinished() : boolean
     <coordinates>
       <x>160</x>
       <y>200</y>
-      <w>270</w>
+      <w>290</w>
       <h>110</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 /Semantics/
 --
-/getPossibleActions() : ArrayList&lt;int&gt;/
-/executeAction() : Graph/
-/isFinished() : boolean/
+/+ getPossibleActions() : ArrayList&lt;int&gt;/
+/+ executeAction() : Graph/
+/+ isFinished() : boolean/
 
 </panel_attributes>
     <additional_attributes/>
@@ -51,9 +51,9 @@ isFinished() : boolean
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>110</x>
+      <x>130</x>
       <y>160</y>
-      <w>380</w>
+      <w>360</w>
       <h>350</h>
     </coordinates>
     <panel_attributes/>

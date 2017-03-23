@@ -13,7 +13,6 @@
 --
 + activities : ArrayList&lt;ConresActivity&gt; 
 + relations : ArrayList&lt;ConresRelation&gt; 
-+ trace : ArrayList&lt;ConresActivity&gt;
 --
 + ConresGraph(activities : ArrayList&lt;ConresActivity&gt; , 
     relations : ArrayList&lt;ConresRelation&gt; )

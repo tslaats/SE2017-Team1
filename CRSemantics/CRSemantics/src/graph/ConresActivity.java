@@ -1,6 +1,7 @@
 package graph;
 
 import interfaces.Graph;
+import java.awt.Point;
 
 public class ConresActivity {
     public int id;
