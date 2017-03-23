@@ -82,17 +82,20 @@ public class CRSemantics implements Semantics {
     }
     
     @Override
-    public boolean isFinished(ConresGraph graph) throws Exception {
+    public boolean isFinished(Graph graph) throws Exception {
     	ConresGraph crGraph = null;
     	try{
     		crGraph = (ConresGraph)graph;
     	}catch(Exception e){
     		throw new Exception("This is not a CRGraph");
     	}
-        for(int i = 0; i < crGraph.activities.size(); i++)
-
-        	// USE THE FACTORY
-            if(crGraph.activities.get(i).isPending || !crGraph.activities.get(i).nestedGraph.isFinished())
+    		
+        for(int i = 0; i < crGraph.activities.size(); i++){
+        	
+        	Graph nestedGraph = crGraph.activities.get(i).nestedGraph;
+        	Semantics semantics = semanticsFactory.getSemantics(nestedGraph);
+        	
+            if(crGraph.activities.get(i).isPending || semantics.isFinished(nestedGraph))
                 return false;
         return true;
     }

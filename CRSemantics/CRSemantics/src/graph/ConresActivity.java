@@ -1,5 +1,7 @@
 package graph;
 
+import java.awt.Point;
+
 import interfaces.Graph;
 
 public class ConresActivity {
@@ -9,7 +11,7 @@ public class ConresActivity {
     public String role;
     public boolean isExecuted;
     public boolean isPending;
-    public Graph nestedGraph;
+    public Graph nestedGraph = null;
 
     public ConresActivity(int id, Point position, String name, String role, boolean isPending, Graph nestedGraph){
         this.id = id;
@@ -21,6 +23,15 @@ public class ConresActivity {
         this.isExecuted = false;
     }
 
+    public ConresActivity(int id, Point position, String name, String role, boolean isPending){
+        this.id = id;
+        this.position = position;
+        this.name = name;
+        this.role = role;
+        this.isPending = isPending;
+        this.isExecuted = false;
+    }
+    
     public String toString(){
         return " ";
     }
