@@ -1,4 +1,4 @@
-package petriNet.src.petriNet.visualization.petriNet;
+package petriNet.visualization.petriNet;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
@@ -67,19 +67,49 @@ public class Connection{
         if (whereTo.equals("to_transition")){
             from = place.getPosition();
             to = transition.getPosition();
+            
+            Point resizedTo;
+            double slope = Math.abs(to.y - from.y)/Math.abs(to.x - from.x);
+            if (slope == 0) {
+            	int width = (int) Math.ceil(7.5 * transition.getName().length()) / 2;
+            	double resize = (Math.abs(to.x - from.x - width)/Math.abs((double) (to.x-from.x)))*100.0;
+            	resizedTo = retVectorByPercent(from, to, resize);
+            	
+            }
+            else {
+            	resizedTo = retVectorByPercent(from, to, 80.0);
+            }
+            double length = Math.sqrt(Math.pow(Math.abs(resizedTo.x - from.x), 2) + Math.pow(Math.abs(resizedTo.y - from.y), 2));
+            double original_length = Math.sqrt(Math.pow(Math.abs(to.x - from.x), 2) + Math.pow(Math.abs(to.y - from.y), 2));
+            double arrowlength = (length - 15) / original_length;
+            Point arrowSize = retVectorByPercent(from, to, arrowlength*100);
+
+            Point pOne = turnVec(arrowSize, resizedTo, false);
+            Point pTwo = turnVec(arrowSize, resizedTo, true);
+
+            g2d.draw(new Line2D.Double(from.x, from.y, resizedTo.x, resizedTo.y));
+            g2d.fill( new Polygon(new int[] {pOne.x, resizedTo.x, pTwo.x}, new int[] {pOne.y, resizedTo.y, pTwo.y}, 3));
         } else {
             to = place.getPosition();
             from = transition.getPosition();
+            
+            Point resizedTo;
+            int radius = 15;
+            double resize = ((Math.abs(to.x - from.x) - radius)/Math.abs((double) (to.x-from.x)))*100.0;
+            resizedTo = retVectorByPercent(from, to, resize);
+            double length = Math.sqrt(Math.pow(Math.abs(resizedTo.x - from.x), 2) + Math.pow(Math.abs(resizedTo.y - from.y), 2));
+            double original_length = Math.sqrt(Math.pow(Math.abs(to.x - from.x), 2) + Math.pow(Math.abs(to.y - from.y), 2));
+            double arrowlength = (length - 15) / original_length;
+            Point arrowSize = retVectorByPercent(from, to, arrowlength*100);
+
+            Point pOne = turnVec(arrowSize, resizedTo, false);
+            Point pTwo = turnVec(arrowSize, resizedTo, true);
+
+            g2d.draw(new Line2D.Double(from.x, from.y, resizedTo.x, resizedTo.y));
+            g2d.fill( new Polygon(new int[] {pOne.x, resizedTo.x, pTwo.x}, new int[] {pOne.y, resizedTo.y, pTwo.y}, 3));
         }
 
-        Point resizedTo = retVectorByPercent(from, to, 75.0);
-        Point arrowSize = retVectorByPercent(from, to, 65.0);
-
-        Point pOne = turnVec(arrowSize, resizedTo, false);
-        Point pTwo = turnVec(arrowSize, resizedTo, true);
-
-        g2d.draw(new Line2D.Double(from.x, from.y, resizedTo.x, resizedTo.y));
-        g2d.fill( new Polygon(new int[] {pOne.x, resizedTo.x, pTwo.x}, new int[] {pOne.y, resizedTo.y, pTwo.y}, 3));
+        
     }
 
 

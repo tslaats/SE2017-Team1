@@ -154,44 +154,6 @@ public class PetriNet extends JPanel {
     }
 
 
-    /* Function addArc() takes an array containing coordinates (x1,y1,x2,y2) 
-     * and two strings that indicate the type of the incoming and out-coming object ("T" or "P).
-     * The function then calculates the center of the objects and returns the coordinates.  
-     */
-    /*public double[] addArc(double[] coords, String from, String to) {
-        double[] arc_coords = new double[4];
-
-        // Get coordinates for incoming object (x1, y1)
-        if (from.equalsIgnoreCase("T")){
-            arc_coords[0] = coords[0]+50;
-            arc_coords[1] = coords[1]+25;
-        }
-        else if (from.equalsIgnoreCase("P")){
-            arc_coords[0] = coords[0] - (circle_radius/2);
-            arc_coords[1] = coords[1] - (circle_radius/2);
-        }
-        else{
-            System.out.println("ERR: type not found");
-            return arc_coords;
-        }
-
-        // Get coordinates for out-coming object (x2,y2)
-        if (to.equalsIgnoreCase("T")){
-            arc_coords[2] = coords[2]+50;
-            arc_coords[3] = coords[3]+25;
-        }
-        else if (to.equalsIgnoreCase("P")){
-            arc_coords[2] = coords[2] - (circle_radius/2);
-            arc_coords[3] = coords[3] - (circle_radius/2);
-        }
-        else{
-            System.out.println("ERR: type not found");
-            return arc_coords;
-        }
-
-        return coords;
-    }*/
-
     private void genSingleConnection(Transition t, ArrayList<Connection> connections){
         ArrayList<Place> incoming = t.getIncoming();
         ArrayList<Place> outgoing = t.getOutgoing();
