@@ -5,10 +5,16 @@ import java.util.List;
 
 import graph.ConresActivity;
 import graph.ConresGraph;
+import graph.ConresRelation;
 import graph.Type;
 import interfaces.Graph;
 import interfaces.Semantics;
 import utils.SemanticsFactory;
+
+
+
+//TODO MAKE A DEEP COPY OF THE CRGRAPH WHEN RECIEVED
+//TODO IF TIME ADD MEMORIZATION TO THE HELPER FUNCTIONS.
 
 public class CRSemantics implements Semantics {
 	
@@ -50,8 +56,9 @@ public class CRSemantics implements Semantics {
     	}
         List<Integer> actions = new ArrayList<Integer>();
         for(int i = 0; i < crGraph.activities.size(); i++) {
-            if(!crGraph.activities.get(i).isExecuted && isExecutable(graph, crGraph.activities.get(i).id))
-                actions.add(crGraph.activities.get(i).id);
+            if(!crGraph.activities.get(i).isExecuted && noBlockingConditions(crGraph.activities.get(i), crGraph)){
+            	actions.add(crGraph.activities.get(i).id);
+            }
         }
         return actions;
     }
@@ -69,20 +76,86 @@ public class CRSemantics implements Semantics {
     	}catch(Exception e){
     		throw new Exception("This is not a CRGraph");
     	}
-        for(int i = 0; i < ids.size(); i++) {
-            for(int j = 0; j < crGraph.activities.size(); j++) {
-                if(crGraph.activities.get(i).id == ids.get(i))
-                    if(isExecutable(crGraph, ids.get(i)))
-                    	crGraph.activities.get(i).isExecuted = true;
-                		crGraph.activities.get(i).isPending = false;
-                    else
-                        throw new Exception("Event not executable!!!!");
-            }
+    	
+    	// Its nested graph activities that needs execution
+    	if(ids.size() > 1){
+    		for(int i = 0; i < crGraph.activities.size(); i++){
+    			if(crGraph.activities.get(i).id == ids.get(0)){
+    				
+    				//TODO check all condition relations
+    				ConresActivity activity = crGraph.activities.get(i);
+    				if (!noBlockingConditions(activity, crGraph)){
+    					throw new Exception("Blocking condition relation");
+    				}
+    				
+    				//Check that is has a nested Graph
+
+    				if(activity.nestedGraph == null){
+    					throw new Exception("There is no nested graph for given id");
+    				}
+    				
+    				Semantics semantics = semanticsFactory.getSemantics(activity.nestedGraph);
+    				
+    				ids.remove(0);
+    				
+    				activity.nestedGraph = semantics.executeAction(activity.nestedGraph, ids);
+    				
+    			}
+    		}
+    		
         }
+    	
+    	// Its activity in this graph that needs execution
+    	if (ids.size() == 1){
+    		for (int i = 0; i < crGraph.activities.size(); i++){
+    			if(crGraph.activities.get(i).id == ids.get(0)){
+    				ConresActivity activity = crGraph.activities.get(i);
+    				activity.isExecuted = true;
+    				activity.isPending = false;
+    				
+    				//Check all condition relations
+    				if(!noBlockingConditions(activity, crGraph)){
+    					throw new Exception("Condition relationship blocking for execution");
+    				}  				
+    				
+    				//Check if it makes anything pending, and mark them as pending  				
+    				makeActivitiesPending(activity, crGraph);
+    				
+    			}
+    		}
+    	}
         return crGraph;
     }
     
-    @Override
+    // Function used to Response relations 
+    private void makeActivitiesPending(ConresActivity activity, ConresGraph crGraph) {
+    	for (int i = 0; i < crGraph.relations.size(); i++){
+    		ConresRelation relation = crGraph.relations.get(i);
+    		if(relation.parent.id == activity.id && relation.type == Type.RESPONSE){
+    			relation.child.isPending = true;
+    		}
+    	}	
+	}
+
+    // Function to check for any not done conditions
+	private boolean noBlockingConditions(ConresActivity activity, ConresGraph crGraph) {
+		for(int i = 0; i < crGraph.relations.size(); i++){
+			ConresRelation relation = crGraph.relations.get(i);
+			if(relation.child.id == activity.id && relation.type == Type.CONDITION && !relation.parent.isExecuted){
+				return false;
+			}
+			else if(relation.child.id == activity.id && relation.type == Type.CONDITION && relation.parent.isExecuted){
+				
+				if(!noBlockingConditions(relation.parent, crGraph)){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+
+	@Override
     public boolean isFinished(Graph graph) throws Exception {
     	ConresGraph crGraph = null;
     	try{
@@ -108,6 +181,7 @@ public class CRSemantics implements Semantics {
             		return false;
             	}
         	}
+        }
         return true;
     }
 
