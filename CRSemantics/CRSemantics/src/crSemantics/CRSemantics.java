@@ -17,10 +17,10 @@ import utils.SemanticsFactory;
 //TODO IF TIME ADD MEMORIZATION TO THE HELPER FUNCTIONS.
 
 public class CRSemantics implements Semantics {
-	
+
 	public SemanticsFactory semanticsFactory = null;
-	
-	public CRSemantics(){	
+
+	public CRSemantics(){
 		this.semanticsFactory = new SemanticsFactory();
 	}
 
@@ -34,7 +34,7 @@ public class CRSemantics implements Semantics {
         }
         return true;
     }
-	
+
     public boolean isExecutable(ConresGraph graph, ConresActivity activity) {
         for(int i = 0; i < graph.relations.size(); i++) {
             if(graph.relations.get(i).type == Type.CONDITION)
@@ -45,7 +45,7 @@ public class CRSemantics implements Semantics {
         }
         return true;
     }
-    
+
     @Override
     public List<Integer> getPossibleActions(Graph graph) throws Exception {
     	ConresGraph crGraph = null;
@@ -163,26 +163,23 @@ public class CRSemantics implements Semantics {
     	}catch(Exception e){
     		throw new Exception("This is not a CRGraph");
     	}
-    		
+
         for(int i = 0; i < crGraph.activities.size(); i++){
-        	
+
         	ConresActivity activity = crGraph.activities.get(i);
-        	
-        	if(activity.isPending == true){
+
+        	if(activity.isPending)
         		return false;
-        	}
-        	
+
         	if (activity.nestedGraph != null){
         		//Check if nested graph is done
         		Graph nestedGraph = activity.nestedGraph;
             	Semantics semantics = semanticsFactory.getSemantics(nestedGraph);
-            	
-            	if(semantics.isFinished(nestedGraph) == false){
+
+            	if(!semantics.isFinished(nestedGraph))
             		return false;
-            	}
         	}
         }
         return true;
     }
-
 }

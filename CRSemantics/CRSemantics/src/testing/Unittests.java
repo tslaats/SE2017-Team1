@@ -1,14 +1,98 @@
 package testing;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
+
+import crSemantics.CRSemantics;
+import graph.ConresActivity;
+import graph.ConresGraph;
+import graph.ConresRelation;
+import graph.Type;
+import utils.ExceptionTags;
 
 public class Unittests {
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void ExecuteAnInvalidAction() {
+		// Create a graph with one condition relation connected to two activities
+		ConresActivity act = new ConresActivity(0, new Point(2,2), "First event", "role?", true);
+		ConresActivity act2 = new ConresActivity(1, new Point(2,2), "Second event", "role?", false);
+		ConresRelation rel = new ConresRelation(act, act2, Type.CONDITION);
+
+		List<ConresRelation> relations = new ArrayList<>();
+		relations.add(rel);
+		ConresGraph graph = new ConresGraph(new ArrayList<>(), new ArrayList<>());
+
+		CRSemantics crSemantics = new CRSemantics();
+
+		// Try to execute an event that depends on another event to be executed first
+		List<Integer> actionsToExecute = new ArrayList<>(1);
+		try {
+			crSemantics.executeAction(graph, actionsToExecute);
+		}
+		catch(Exception e) {
+			if(ExceptionTags.InvalidActionException.equalsName(e.getMessage()))
+				assertTrue(true);
+		}
+		assertTrue(false);
 	}
 
+	@Test
+	public void ExecuteEmptyActionList() {
+		// Create empty graph
+		CRSemantics crSemantics = new CRSemantics();
+
+		// Try to execute with an empty list of ids
+		try {
+			crSemantics.executeAction(new ConresGraph(new ArrayList<ConresActivity>(), new ArrayList<ConresRelation>()), new ArrayList<Integer>());
+		}
+		catch(Exception e) {
+			if(ExceptionTags.EmptyListException.equalsName(e.getMessage()))
+				assertTrue(true);
+		}
+		assertTrue(false);
+	}
+
+	@Test
+	public void ExecuteValidAction() throws Exception {
+		// Create a graph with one response relation connected to two activities
+		ConresActivity act = new ConresActivity(0, new Point(2,2), "First event", "role?", false);
+		ConresActivity act2 = new ConresActivity(1, new Point(2,2), "Second event", "role?", false);
+		ConresRelation rel = new ConresRelation(act, act2, Type.RESPONSE);
+
+		List<ConresActivity> actions = new ArrayList<>();
+		List<ConresRelation> relations = new ArrayList<>();
+
+		actions.add(act);
+		actions.add(act2);
+		relations.add(rel);
+		ConresGraph graph = new ConresGraph(actions, relations);
+
+		CRSemantics crSemantics = new CRSemantics();
+
+		// Try to execute an event that does not depend on another event to be executed first
+		List<Integer> actionsToExecute = new ArrayList<>(1);
+		crSemantics.executeAction(graph, actionsToExecute);
+	}
+
+	@Test
+	public void ExecuteValidLoneAction() throws Exception{
+		// Create a graph with one relation connected to two activities
+		ConresActivity act = new ConresActivity(0, new Point(2,2), "First event", "role?", true);
+
+		List<ConresActivity> activities = new ArrayList<>();
+		activities.add(act);
+		ConresGraph graph = new ConresGraph(activities, new ArrayList<>());
+
+		CRSemantics crSemantics = new CRSemantics();
+
+		// Try to execute a lone event
+		List<Integer> actionsToExecute = new ArrayList<>(1);
+		crSemantics.executeAction(graph, actionsToExecute);
+	}
 }
