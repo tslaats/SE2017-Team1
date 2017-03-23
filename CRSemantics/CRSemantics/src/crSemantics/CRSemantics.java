@@ -5,16 +5,23 @@ import java.util.List;
 
 import graph.ConresActivity;
 import graph.ConresGraph;
+import graph.ConresRelation;
 import graph.Type;
 import interfaces.Graph;
 import interfaces.Semantics;
+import utils.ExceptionTags;
 import utils.SemanticsFactory;
 
+
+
+//TODO MAKE A DEEP COPY OF THE CRGRAPH WHEN RECIEVED
+//TODO IF TIME ADD MEMORIZATION TO THE HELPER FUNCTIONS.
+
 public class CRSemantics implements Semantics {
-	
+
 	public SemanticsFactory semanticsFactory = null;
-	
-	public CRSemantics(){	
+
+	public CRSemantics(){
 		this.semanticsFactory = new SemanticsFactory();
 	}
 
@@ -28,7 +35,7 @@ public class CRSemantics implements Semantics {
         }
         return true;
     }
-	
+
     public boolean isExecutable(ConresGraph graph, ConresActivity activity) {
         for(int i = 0; i < graph.relations.size(); i++) {
             if(graph.relations.get(i).type == Type.CONDITION)
@@ -39,7 +46,7 @@ public class CRSemantics implements Semantics {
         }
         return true;
     }
-    
+
     @Override
     public List<Integer> getPossibleActions(Graph graph) throws Exception {
     	ConresGraph crGraph = null;
@@ -50,8 +57,9 @@ public class CRSemantics implements Semantics {
     	}
         List<Integer> actions = new ArrayList<Integer>();
         for(int i = 0; i < crGraph.activities.size(); i++) {
-            if(!crGraph.activities.get(i).isExecuted && isExecutable(graph, crGraph.activities.get(i).id))
-                actions.add(crGraph.activities.get(i).id);
+            if(!crGraph.activities.get(i).isExecuted && noBlockingConditions(crGraph.activities.get(i), crGraph)){
+            	actions.add(crGraph.activities.get(i).id);
+            }
         }
         return actions;
     }
@@ -69,35 +77,113 @@ public class CRSemantics implements Semantics {
     	}catch(Exception e){
     		throw new Exception("This is not a CRGraph");
     	}
-        for(int i = 0; i < ids.size(); i++) {
-            for(int j = 0; j < crGraph.activities.size(); j++) {
-                if(crGraph.activities.get(i).id == ids.get(i))
-                    if(isExecutable(crGraph, ids.get(i)))
-                    	crGraph.activities.get(i).isExecuted = true;
-                    else
-                        throw new Exception("Event not executable!!!!");
-            }
+
+    	if(ids.isEmpty())
+    		throw new Exception(ExceptionTags.EmptyListException.toString());
+
+    	// Its nested graph activities that needs execution
+    	if(ids.size() > 1){
+    		for(int i = 0; i < crGraph.activities.size(); i++){
+    			if(crGraph.activities.get(i).id == ids.get(0)){
+
+    				//TODO check all condition relations
+    				ConresActivity activity = crGraph.activities.get(i);
+    				if (!noBlockingConditions(activity, crGraph)){
+    					throw new Exception("Blocking condition relation");
+    				}
+
+    				//Check that is has a nested Graph
+
+    				if(activity.nestedGraph == null){
+    					throw new Exception("There is no nested graph for given id");
+    				}
+
+    				Semantics semantics = semanticsFactory.getSemantics(activity.nestedGraph);
+
+    				ids.remove(0);
+
+    				activity.nestedGraph = semantics.executeAction(activity.nestedGraph, ids);
+
+    			}
+    		}
+
         }
+
+    	// Its activity in this graph that needs execution
+    	if (ids.size() == 1){
+    		for (int i = 0; i < crGraph.activities.size(); i++){
+    			if(crGraph.activities.get(i).id == ids.get(0)){
+    				ConresActivity activity = crGraph.activities.get(i);
+    				activity.isExecuted = true;
+    				activity.isPending = false;
+
+    				//Check all condition relations
+    				if(!noBlockingConditions(activity, crGraph)){
+    					throw new Exception(ExceptionTags.InvalidActionException.toString());
+    				}
+
+    				//Check if it makes anything pending, and mark them as pending
+    				makeActivitiesPending(activity, crGraph);
+
+    			}
+    		}
+    	}
         return crGraph;
     }
-    
-    @Override
+
+    // Function used to Response relations
+    private void makeActivitiesPending(ConresActivity activity, ConresGraph crGraph) {
+    	for (int i = 0; i < crGraph.relations.size(); i++){
+    		ConresRelation relation = crGraph.relations.get(i);
+    		if(relation.parent.id == activity.id && relation.type == Type.RESPONSE){
+    			relation.child.isPending = true;
+    		}
+    	}
+	}
+
+    // Function to check for any not done conditions
+	private boolean noBlockingConditions(ConresActivity activity, ConresGraph crGraph) {
+		for(int i = 0; i < crGraph.relations.size(); i++){
+			ConresRelation relation = crGraph.relations.get(i);
+			if(relation.child.id == activity.id && relation.type == Type.CONDITION && !relation.parent.isExecuted){
+				return false;
+			}
+			else if(relation.child.id == activity.id && relation.type == Type.CONDITION && relation.parent.isExecuted){
+
+				if(!noBlockingConditions(relation.parent, crGraph)){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+
+	@Override
     public boolean isFinished(Graph graph) throws Exception {
     	ConresGraph crGraph = null;
     	try{
     		crGraph = (ConresGraph)graph;
     	}catch(Exception e){
-    		throw new Exception("This is not a CRGraph");
+    		throw new Exception(ExceptionTags.InvalidActionException.toString());
     	}
-    		
+
         for(int i = 0; i < crGraph.activities.size(); i++){
-        	
-        	Graph nestedGraph = crGraph.activities.get(i).nestedGraph;
-        	Semantics semantics = semanticsFactory.getSemantics(nestedGraph);
-        	
-            if(crGraph.activities.get(i).isPending || semantics.isFinished(nestedGraph))
-                return false;
+
+        	ConresActivity activity = crGraph.activities.get(i);
+
+        	if(activity.isPending)
+        		return false;
+
+        	if (activity.nestedGraph != null){
+        		//Check if nested graph is done
+        		Graph nestedGraph = activity.nestedGraph;
+            	Semantics semantics = semanticsFactory.getSemantics(nestedGraph);
+
+            	if(!semantics.isFinished(nestedGraph))
+            		return false;
+        	}
+        }
         return true;
     }
-
 }
