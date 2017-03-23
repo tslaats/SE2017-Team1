@@ -1,11 +1,8 @@
 package petriNet.src.petriNet.visualization.petriNet;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import javax.swing.JFrame;
-
 import java.awt.Point;
+import java.util.ArrayList;
 
 /*
  *  This file is an example, of the petri graph structure. It can be run without
@@ -100,10 +97,8 @@ public class Main {
         g.setEnd(p7);
 
         JFrame frame = new JFrame("Test");
-        together p = new together(g);
-        p.generate_connections();
-        
-        frame.add(p);
+
+        frame.add(g);
         frame.setSize(1000, 500);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

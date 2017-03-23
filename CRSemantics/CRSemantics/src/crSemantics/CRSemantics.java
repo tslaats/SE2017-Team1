@@ -18,7 +18,7 @@ public class CRSemantics implements Semantics {
 		this.semanticsFactory = new SemanticsFactory();
 	}
 
-	/***
+
     public boolean isExecutable(ConresGraph graph, int id) {
         for(int i = 0; i < graph.activities.size(); i++) {
             if(graph.activities.get(i).id == id)
@@ -26,8 +26,8 @@ public class CRSemantics implements Semantics {
                 // not our problem
                 return isExecutable(graph, graph.activities.get(i));
         }
+        return true;
     }
-***/
 	
     public boolean isExecutable(ConresGraph graph, ConresActivity activity) {
         for(int i = 0; i < graph.relations.size(); i++) {
@@ -74,6 +74,7 @@ public class CRSemantics implements Semantics {
                 if(crGraph.activities.get(i).id == ids.get(i))
                     if(isExecutable(crGraph, ids.get(i)))
                     	crGraph.activities.get(i).isExecuted = true;
+                		crGraph.activities.get(i).isPending = false;
                     else
                         throw new Exception("Event not executable!!!!");
             }
@@ -89,11 +90,24 @@ public class CRSemantics implements Semantics {
     	}catch(Exception e){
     		throw new Exception("This is not a CRGraph");
     	}
-        for(int i = 0; i < crGraph.activities.size(); i++)
-
-        	// USE THE FACTORY
-            if(crGraph.activities.get(i).isPending || !crGraph.activities.get(i).nestedGraph.isFinished())
-                return false;
+    		
+        for(int i = 0; i < crGraph.activities.size(); i++){
+        	
+        	ConresActivity activity = crGraph.activities.get(i);
+        	
+        	if(activity.isPending == true){
+        		return false;
+        	}
+        	
+        	if (activity.nestedGraph != null){
+        		//Check if nested graph is done
+        		Graph nestedGraph = activity.nestedGraph;
+            	Semantics semantics = semanticsFactory.getSemantics(nestedGraph);
+            	
+            	if(semantics.isFinished(nestedGraph) == false){
+            		return false;
+            	}
+        	}
         return true;
     }
 

@@ -5,8 +5,9 @@ package petriNet.src.petriNet.visualization.petriNet;
  *  @authors >> Emil, Frederik, Mads, Susanne, Philip Falck
  */
 
+import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
-import java.awt.Point;
 
 /**
  *  This is the class for creating a place in a petri graph. It consists of four
@@ -84,5 +85,25 @@ public class Place {
                 (incoming == null ? "none" : "assigned") + ", Outgoing: " +
                 (outgoing == null ? "none" : "assigned") + ", Position: " +
                 position.x + "," + position.y + ")");
+    }
+
+    public void paintPlace(Graphics g){
+        int diameter = 30;
+
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.WHITE);
+        Ellipse2D.Double circle = new Ellipse2D.Double((position.x - (diameter / 2)), (position.y - (diameter / 2)),
+                diameter, diameter);
+        g2d.fill(circle);
+
+        g2d.setColor(Color.GREEN);
+        g2d.fill(circle);
+        if (token){
+            g2d.setColor(Color.DARK_GRAY);
+            Ellipse2D.Double t = new Ellipse2D.Double((position.x - (diameter / 4)),
+                    (position.y - (diameter / 4)),
+                    (diameter / 2), (diameter / 2));
+            g2d.fill(t);
+        }
     }
 }

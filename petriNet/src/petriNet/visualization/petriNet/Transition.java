@@ -5,8 +5,9 @@ package petriNet.src.petriNet.visualization.petriNet;
  *  @authors >> Emil, Frederik, Mads, Susanne, Philip Falck
  */
 
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.awt.Point;
 
 /**
  *  This is the transition class. It holds an instance of a transition node, for
@@ -93,5 +94,21 @@ public class Transition {
         return ("Transition (Name: " + name + ", Id: " + id + ", IncomingSize: " +
                 incoming.size() + ", OutgoingSize: " + outgoing.size() +
                 ", Position: " + position.x + "," + position.y + ")");
+    }
+
+    public void paintTransition(Graphics g){
+        int width = 10;
+        int height = 40;
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.WHITE);
+        Rectangle2D.Double rect = new Rectangle2D.Double((position.x - (width / 2)), (position.y - (height / 2)), width, height);
+        g2d.fill(rect);
+
+        g2d.setColor(Color.BLUE);
+        g2d.draw(rect);
+
+        if ((name != null) && (!name.isEmpty())){
+            g2d.drawString(name, (position.x - (width - 5)), (position.y - (height + 2)));
+        }
     }
 }
