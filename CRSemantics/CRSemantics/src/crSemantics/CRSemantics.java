@@ -79,7 +79,7 @@ public class CRSemantics implements Semantics {
     	}
     	
     	if(ids.isEmpty())
-    		throw new Exception(ExceptionTags.InvalidActionException.toString());
+    		throw new Exception(ExceptionTags.EmptyListException.toString());
     	
     	// Its nested graph activities that needs execution
     	if(ids.size() > 1){
