@@ -3,35 +3,36 @@ package crSemantics;
 import java.util.ArrayList;
 import java.util.List;
 
+import graph.ConresActivity;
 import graph.ConresGraph;
+import graph.Type;
 import interfaces.Graph;
 import interfaces.Semantics;
 
 public class CRSemantics implements Semantics {
 
-    public bool isExecutable(ConresGraph graph, int id) {
+    public boolean isExecutable(ConresGraph graph, int id) {
         for(int i = 0; i < graph.activities.size(); i++) {
-            if(graph.activities[i].id == id)
+            if(graph.activities.get(i).id == id)
                 // what if multiple ConresActivities have the same id?
                 // not our problem
-                return isExecutable(graph, crGraph.activities[i]);
+                return isExecutable(graph, graph.activities.get(i));
         }
     }
 
-    public bool isExecutable(Graph graph, ConresActivity activity) {
-        ConresGraph crGraph = (ConresGraph)graph;
-        for(int i = 0; i < crGraph.relations.size(); i++) {
-            if(crGraph.relations[i].type == Type.Condition)
+    public boolean isExecutable(ConresGraph graph, ConresActivity activity) {
+        for(int i = 0; i < graph.relations.size(); i++) {
+            if(graph.relations.get(i).type == Type.CONDITION)
                 // this definitely needs to be tested. object equivalency
-                if (crGraph.relations[i].child == activity)
-                    if(crGraph.relations[i].parent.isPending || !crGraph.relations[i].parent.isExecuted)
+                if (graph.relations.get(i).child == activity)
+                    if(graph.relations.get(i).parent.isPending || !graph.relations.get(i).parent.isExecuted)
                         return false;
         }
         return true;
     }
 
     @Override
-    public List<int> getPossibleActions(Graph graph) throws Exception {
+    public List<Integer> getPossibleActions(Graph graph) throws Exception {
         List<int> actions = new ArrayList<int>();
         ConresGraph crGraph = (ConresGraph)graph;
         for(int i = 0; i < crGraph.activities.size(); i++) {
@@ -68,4 +69,5 @@ public class CRSemantics implements Semantics {
                 return false;
         return true;
     }
+
 }
