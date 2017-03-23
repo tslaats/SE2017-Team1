@@ -13,7 +13,7 @@
 --
 + factory : SemanticsFactory
 --
-+ getPossibleActions() : ArrayList&lt;int&gt; 
++ getPossibleActions() : List&lt;int&gt; 
 + executeAction() : Graph
 + isFinished() : boolean
 </panel_attributes>
@@ -30,7 +30,7 @@
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 /Semantics/
 --
-/+ getPossibleActions() : ArrayList&lt;int&gt;/
+/+ getPossibleActions() : List&lt;int&gt;/
 /+ executeAction() : Graph/
 /+ isFinished() : boolean/
 
