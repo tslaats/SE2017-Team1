@@ -17,6 +17,34 @@ import graph.Type;
 import utils.ExceptionTags;
 
 public class Unittests {
+	
+	ConresGraph testGraph;
+	ConresActivity implementActivity;
+	ConresActivity designActivity;
+	
+	protected void setUp() {
+		implementActivity = new ConresActivity(0, new Point(0,0), "Implement System", "role", true);
+        designActivity = new ConresActivity(1, new Point(0,0), "Design System", "role", false);
+        ConresActivity elicitActivity = new ConresActivity(2, new Point(0,0), "Elicit Requirements", "role", false);
+        ConresActivity changeActivity = new ConresActivity(3, new Point(0,0), "Change Request", "role", false);
+        ArrayList<ConresActivity> activityList = new ArrayList<ConresActivity>();
+        activityList.add(implementActivity);
+        activityList.add(designActivity);
+        activityList.add(elicitActivity);
+        activityList.add(changeActivity);
+        
+        ConresRelation elicitDesignRelation = new ConresRelation(elicitActivity, designActivity, Type.CONDITION);
+        ConresRelation designImplementRelation = new ConresRelation(designActivity, implementActivity, Type.CONDITION);
+        ConresRelation implementChangeRelation = new ConresRelation(implementActivity, changeActivity, Type.CONDITION);
+        ConresRelation changeImplementRelation = new ConresRelation(changeActivity, implementActivity, Type.RESPONSE);
+        ArrayList<ConresRelation> relationList = new ArrayList<ConresRelation>();
+        relationList.add(elicitDesignRelation);
+        relationList.add(designImplementRelation);
+        relationList.add(implementChangeRelation);
+        relationList.add(changeImplementRelation);
+        
+        testGraph = new ConresGraph(activityList, relationList);
+	}
 
 	@Test
 	public void ExecuteAnInvalidAction() {
