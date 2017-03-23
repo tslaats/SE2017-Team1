@@ -18,7 +18,7 @@ public class CRSemantics implements Semantics {
 		this.semanticsFactory = new SemanticsFactory();
 	}
 
-	/***
+
     public boolean isExecutable(ConresGraph graph, int id) {
         for(int i = 0; i < graph.activities.size(); i++) {
             if(graph.activities.get(i).id == id)
@@ -26,8 +26,8 @@ public class CRSemantics implements Semantics {
                 // not our problem
                 return isExecutable(graph, graph.activities.get(i));
         }
+        return true;
     }
-***/
 	
     public boolean isExecutable(ConresGraph graph, ConresActivity activity) {
         for(int i = 0; i < graph.relations.size(); i++) {
@@ -89,10 +89,13 @@ public class CRSemantics implements Semantics {
     	}catch(Exception e){
     		throw new Exception("This is not a CRGraph");
     	}
-        for(int i = 0; i < crGraph.activities.size(); i++)
-
-        	// USE THE FACTORY
-            if(crGraph.activities.get(i).isPending || !crGraph.activities.get(i).nestedGraph.isFinished())
+    		
+        for(int i = 0; i < crGraph.activities.size(); i++){
+        	
+        	Graph nestedGraph = crGraph.activities.get(i).nestedGraph;
+        	Semantics semantics = semanticsFactory.getSemantics(nestedGraph);
+        	
+            if(crGraph.activities.get(i).isPending || semantics.isFinished(nestedGraph))
                 return false;
         return true;
     }
