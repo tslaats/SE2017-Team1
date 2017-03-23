@@ -1,8 +1,8 @@
 package petriNet.src.petriNet.visualization.petriNet;
 
 import javax.swing.JFrame;
-
 import java.awt.Point;
+import java.util.ArrayList;
 
 /*
  *  This file is an example, of the petri graph structure. It can be run without
