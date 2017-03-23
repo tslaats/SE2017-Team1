@@ -1,4 +1,4 @@
-package petriNet.src.petriNet.visualization.petriNet;
+package petriNet.visualization.petriNet;
 
 /**
  *  @project >> Software Engineering 2017
@@ -22,11 +22,7 @@ public class PetriNet extends JPanel {
     private Place end = null;
     private ArrayList<Transition> transitions = new ArrayList<Transition>();
     private ArrayList<Place> places = new ArrayList<Place>();
-    private ArrayList<Connection> connections = new ArrayList<Connection>();
-
-    // Change this later, when size of objects have been decided.
-    double box_width = 100; double box_height = 50;
-    double circle_radius = 25;
+    //private ArrayList<Connection> connections = new ArrayList<Connection>();
     
     /**
      *  This is an empty constructor, that is used to instantiate a new instance
@@ -162,7 +158,7 @@ public class PetriNet extends JPanel {
      * and two strings that indicate the type of the incoming and out-coming object ("T" or "P).
      * The function then calculates the center of the objects and returns the coordinates.  
      */
-    public double[] addArc(double[] coords, String from, String to) {
+    /*public double[] addArc(double[] coords, String from, String to) {
         double[] arc_coords = new double[4];
 
         // Get coordinates for incoming object (x1, y1)
@@ -194,42 +190,42 @@ public class PetriNet extends JPanel {
         }
 
         return coords;
-    }
+    }*/
 
-    private void genSingleConnection(Transition t){
+    private void genSingleConnection(Transition t, ArrayList<Connection> connections){
         ArrayList<Place> incoming = t.getIncoming();
         ArrayList<Place> outgoing = t.getOutgoing();
 
         for (Place place : incoming) {
             Connection conn = new Connection(place, t, "to_transition");
-            this.connections.add(conn);
+            connections.add(conn);
         }
         for (Place place : outgoing) {
             Connection conn = new Connection(place, t, "to_place");
-            this.connections.add(conn);
+            connections.add(conn);
         }
     }
 
-    private void generateAllConnections(){
-        ArrayList<Connection> list = new ArrayList<>();
+    private ArrayList<Connection> generateAllConnections(){
+    	ArrayList<Connection> connections = new ArrayList<Connection>();
 
-        HashMap usedId = new HashMap(places.size() + transitions.size());
+        HashMap<Integer, Integer> usedId = new HashMap<Integer, Integer>(places.size() + transitions.size());
 
         for (Transition t : transitions) {
             if (usedId.containsKey(t.getId())){
                 ;
             }
             else {
-                genSingleConnection(t);
+                genSingleConnection(t, connections);
                 usedId.put(t.getId(), t.getId());
             }
         }
-
+        return connections;
     }
 
     @Override
     public void paint(Graphics g){
-        generateAllConnections();
+    	ArrayList<Connection> connections = generateAllConnections();
 
         for (Connection c : connections) {
             c.paint(g);

@@ -1,4 +1,4 @@
-package petriNet.src.petriNet.visualization.petriNet;
+package petriNet.visualization.petriNet;
 
 import javax.swing.JFrame;
 import java.awt.Point;
@@ -15,19 +15,19 @@ public class Main {
     	PetriNet g = new PetriNet();
         
         Transition t1 = new Transition( 2, new Point(150, 250), "Receive order");
-        Transition t2 = new Transition( 5, new Point(250, 100), "Ship order");
-        Transition t3 = new Transition( 7, new Point(350, 100), "Questionnaire");
-        Transition t4 = new Transition( 8, new Point(300, 400), "Send invoice");
-        Transition t5 = new Transition(11, new Point(450, 250), "Receive payment");
+        Transition t2 = new Transition( 5, new Point(350, 100), "Ship order");
+        Transition t3 = new Transition( 7, new Point(550, 100), "Questionnaire");
+        Transition t4 = new Transition( 8, new Point(450, 400), "Send invoice");
+        Transition t5 = new Transition(11, new Point(1000, 250), "Receive payment");
         
         
-        Place p1 = new Place( 1, new Point( 100, 250), true,  null, t1);
-        Place p2 = new Place( 3, new Point(200, 100), false, t1,  t2);
-        Place p3 = new Place( 4, new Point(300, 100), false, t2,  t3);
-        Place p4 = new Place( 6, new Point(400, 100), false, t3,  t5);
-        Place p5 = new Place( 9, new Point(200, 400), false, t1,  t4);
-        Place p6 = new Place(10, new Point(400, 400), false, t4,  t5);
-        Place p7 = new Place(12, new Point(500, 250), false, t5,  null);
+        Place p1 = new Place( 1, new Point( 50, 250), true,  null, t1);
+        Place p2 = new Place( 3, new Point(250, 100), false, t1,  t2);
+        Place p3 = new Place( 4, new Point(450, 100), false, t2,  t3);
+        Place p4 = new Place( 6, new Point(700, 100), false, t3,  t5);
+        Place p5 = new Place( 9, new Point(250, 400), false, t1,  t4);
+        Place p6 = new Place(10, new Point(700, 400), false, t4,  t5);
+        Place p7 = new Place(12, new Point(1150, 250), false, t5,  null);
         
         ArrayList<Place> incomingPlaces = new ArrayList<Place>();
         ArrayList<Place> outgoingPlaces = new ArrayList<Place>();
@@ -99,7 +99,7 @@ public class Main {
         JFrame frame = new JFrame("Test");
 
         frame.add(g);
-        frame.setSize(1000, 500);
+        frame.setSize(1400, 700);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
