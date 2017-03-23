@@ -1,6 +1,6 @@
-package interfaces;
+package graph;
 
-public interface ConresRelation {
+public class ConresRelation {
     public ConresActivity parent;
     public ConresActivity child;
     public Type type;

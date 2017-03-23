@@ -1,6 +1,6 @@
-package interfaces;
+package graph;
 
-public interface ConresActivity {
+public class ConresActivity {
     public int id;
     public Point position;
     public String name;

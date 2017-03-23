@@ -3,15 +3,15 @@ package crSemantics;
 import java.util.ArrayList;
 import java.util.List;
 
+import graph.ConresGraph;
 import interfaces.Graph;
 import interfaces.Semantics;
 
 public class CRSemantics implements Semantics {
 
-    public bool isExecutable(Graph graph, int id) {
-        ConresGraph crGraph = (ConresGraph)graph;
-        for(int i = 0; i < crGraph.activities.size(); i++) {
-            if(crGraph.activities[i].id == id)
+    public bool isExecutable(ConresGraph graph, int id) {
+        for(int i = 0; i < graph.activities.size(); i++) {
+            if(graph.activities[i].id == id)
                 // what if multiple ConresActivities have the same id?
                 // not our problem
                 return isExecutable(graph, crGraph.activities[i]);
