@@ -11,5 +11,7 @@ public class ConresRelation {
         this.type = type;
     }
 
-    public string toString();
+    public String toString(){
+        return " ";
+    }
 }
