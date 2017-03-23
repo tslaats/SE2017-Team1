@@ -14,6 +14,7 @@ import utils.SemanticsFactory;
 
 
 //TODO MAKE A DEEP COPY OF THE CRGRAPH WHEN RECIEVED
+//TODO IF TIME ADD MEMORIZATION TO THE HELPER FUNCTIONS.
 
 public class CRSemantics implements Semantics {
 	
@@ -55,8 +56,9 @@ public class CRSemantics implements Semantics {
     	}
         List<Integer> actions = new ArrayList<Integer>();
         for(int i = 0; i < crGraph.activities.size(); i++) {
-            if(!crGraph.activities.get(i).isExecuted && isExecutable(crGraph, crGraph.activities.get(i).id))
-                actions.add(crGraph.activities.get(i).id);
+            if(!crGraph.activities.get(i).isExecuted && noBlockingConditions(crGraph.activities.get(i), crGraph)){
+            	actions.add(crGraph.activities.get(i).id);
+            }
         }
         return actions;
     }
@@ -81,13 +83,13 @@ public class CRSemantics implements Semantics {
     			if(crGraph.activities.get(i).id == ids.get(0)){
     				
     				//TODO check all condition relations
-    				
-    				
+    				ConresActivity activity = crGraph.activities.get(i);
+    				if (!noBlockingConditions(activity, crGraph)){
+    					throw new Exception("Blocking condition relation");
+    				}
     				
     				//Check that is has a nested Graph
-    				
-    				ConresActivity activity = crGraph.activities.get(i);
-    				
+
     				if(activity.nestedGraph == null){
     					throw new Exception("There is no nested graph for given id");
     				}
@@ -116,8 +118,7 @@ public class CRSemantics implements Semantics {
     					throw new Exception("Condition relationship blocking for execution");
     				}  				
     				
-    				//TODO Check if it makes anything pending.
-    				
+    				//Check if it makes anything pending, and mark them as pending  				
     				makeActivitiesPending(activity, crGraph);
     				
     			}
