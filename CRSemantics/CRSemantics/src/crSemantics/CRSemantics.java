@@ -9,6 +9,7 @@ import graph.ConresRelation;
 import graph.Type;
 import interfaces.Graph;
 import interfaces.Semantics;
+import utils.ExceptionTags;
 import utils.SemanticsFactory;
 
 
@@ -77,6 +78,9 @@ public class CRSemantics implements Semantics {
     		throw new Exception("This is not a CRGraph");
     	}
     	
+    	if(ids.isEmpty())
+    		throw new Exception(ExceptionTags.InvalidActionException.toString());
+    	
     	// Its nested graph activities that needs execution
     	if(ids.size() > 1){
     		for(int i = 0; i < crGraph.activities.size(); i++){
@@ -115,7 +119,7 @@ public class CRSemantics implements Semantics {
     				
     				//Check all condition relations
     				if(!noBlockingConditions(activity, crGraph)){
-    					throw new Exception("Condition relationship blocking for execution");
+    					throw new Exception(ExceptionTags.InvalidActionException.toString());
     				}  				
     				
     				//Check if it makes anything pending, and mark them as pending  				
@@ -161,7 +165,7 @@ public class CRSemantics implements Semantics {
     	try{
     		crGraph = (ConresGraph)graph;
     	}catch(Exception e){
-    		throw new Exception("This is not a CRGraph");
+    		throw new Exception(ExceptionTags.InvalidActionException.toString());
     	}
 
         for(int i = 0; i < crGraph.activities.size(); i++){
