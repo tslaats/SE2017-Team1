@@ -1,13 +1,13 @@
-package petriNet.src.petriNet.visualization.petriNet;
-
 /**
  *  @project >> Software Engineering 2017
  *  @authors >> Emil, Frederik, Mads, Susanne, Philip Falck
  */
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.awt.Point;
 
 /**
  *  This is the petri graph base data structure. It extends from the super class
@@ -15,11 +15,12 @@ import java.awt.Point;
  *  constructors that the user interface group needs to create, and populate the
  *  structure. This  includes transitions, places and indicators for start & end
  */
-public class PetriNet extends Graph {
+public class PetriNet extends JPanel {
     private Place start = null;
     private Place end = null;
     private ArrayList<Transition> transitions = new ArrayList<Transition>();
     private ArrayList<Place> places = new ArrayList<Place>();
+    private ArrayList<Connection> connections = new ArrayList<Connection>();
 
     // Change this later, when size of objects have been decided.
     double box_width = 100; double box_height = 50;
@@ -191,5 +192,51 @@ public class PetriNet extends Graph {
         }
 
         return coords;
+    }
+
+    private void genSingleConnection(Transition t){
+        ArrayList<Place> incoming = t.getIncoming();
+        ArrayList<Place> outgoing = t.getOutgoing();
+
+        for (Place place : incoming) {
+            Connection conn = new Connection(place, t, "to_transition");
+            this.connections.add(conn);
+        }
+        for (Place place : outgoing) {
+            Connection conn = new Connection(place, t, "to_place");
+            this.connections.add(conn);
+        }
+    }
+
+    private void generateAllConnections(){
+        ArrayList<Connection> list = new ArrayList<>();
+
+        HashMap usedId = new HashMap(places.size() + transitions.size());
+
+        for (Transition t : transitions) {
+            if (usedId.containsKey(t.getId())){
+                ;
+            }
+            else {
+                genSingleConnection(t);
+                usedId.put(t.getId(), t.getId());
+            }
+        }
+
+    }
+
+    @Override
+    public void paint(Graphics g){
+        generateAllConnections();
+
+        for (Connection c : connections) {
+            c.paint(g);
+        }
+        for (Transition t : transitions) {
+            t.paintTransition(g);
+        }
+        for (Place p : places) {
+            p.paintPlace(g);
+        }
     }
 }

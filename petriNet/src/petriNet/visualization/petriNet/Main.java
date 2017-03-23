@@ -1,5 +1,3 @@
-package petriNet.src.petriNet.visualization.petriNet;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -100,10 +98,8 @@ public class Main {
         g.setEnd(p7);
 
         JFrame frame = new JFrame("Test");
-        together p = new together(g);
-        p.generate_connections();
-        
-        frame.add(p);
+
+        frame.add(g);
         frame.setSize(1000, 500);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
