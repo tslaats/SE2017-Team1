@@ -1,23 +1,19 @@
 package structure;
 import java.awt.Point;
 
-public class Relation {
+public class Relation extends ConresRelation {
 	private Activity parent;
 	private Activity child;
 	private Point outConnect = new Point(0,0);
 	private Point inConnect = new Point(0,0);
-	private String type;
 
 	// constructors
 	public Relation(Activity parent, Activity child, String type) {
+		super(parent, child, type);
 		this.parent = parent;
 		this.child = child;
-		this.type = type;
 	}
 
-	public String getType() {
-		return this.type;
-	}
 	public Activity getParent() {
 		return this.parent;
 	}

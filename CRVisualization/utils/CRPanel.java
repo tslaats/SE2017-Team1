@@ -1,7 +1,6 @@
 package utils;
 
 import java.awt.*;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import structure.Activity;
@@ -27,14 +26,11 @@ public class CRPanel extends JPanel {
     this.graphToDraw = graph;
   }
   
-  private Activity convertToActivity(ConresActivity conresActivity){
-	int x = conresActivity.position.x + (Constants.ACTIVITY_WIDTH/2);
-  	int y = conresActivity.position.y + (Constants.ACTIVITY_HEIGHT/2);
-  	Point center = new Point(x,y);  
-  	return new Activity(center, conresActivity.role, conresActivity.name, conresActivity.isPending, conresActivity.isExecuted, conresActivity.hasPetri);
+  protected static Activity convertToActivity(ConresActivity conresActivity){ 
+  	return new Activity(conresActivity.position, conresActivity.name, conresActivity.role, conresActivity.isExecuted, conresActivity.isPending, conresActivity.hasPetri);
   }
   
-  private Relation convertToRelation(ConresRelation conresRelation){
+  protected static Relation convertToRelation(ConresRelation conresRelation){
 	  Activity parent = convertToActivity(conresRelation.getParent());
 	  Activity child = convertToActivity(conresRelation.getChild());
 	  String type = conresRelation.getType();
@@ -64,7 +60,7 @@ public class CRPanel extends JPanel {
 	      rels.addAll(relationDrawingFactory.setInRelations(act, rels));
 	      rels.addAll(relationDrawingFactory.setOutRelations(act, rels));
 	  }
-	 try{
+
 	 for (Relation rel : rels) {
 	     if(rel.getType() == "resp") {
 	       relationDrawingFactory.drawResponseRelation(g2d, rel);
@@ -72,9 +68,7 @@ public class CRPanel extends JPanel {
 	     if(rel.getType() == "cond") {
 	       relationDrawingFactory.drawConditionRelation(g2d, rel);
 	     }
-	   }
-	 } catch (MalformedGraphException e) {
-		 e.printStackTrace();
 	 }
+
   }
 }
