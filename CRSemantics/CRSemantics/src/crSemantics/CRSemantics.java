@@ -55,7 +55,7 @@ public class CRSemantics implements Semantics {
     	}
         List<Integer> actions = new ArrayList<Integer>();
         for(int i = 0; i < crGraph.activities.size(); i++) {
-            if(!crGraph.activities.get(i).isExecuted && isExecutable(graph, crGraph.activities.get(i).id))
+            if(!crGraph.activities.get(i).isExecuted && isExecutable(crGraph, crGraph.activities.get(i).id))
                 actions.add(crGraph.activities.get(i).id);
         }
         return actions;
