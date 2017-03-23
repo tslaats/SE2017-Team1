@@ -74,6 +74,7 @@ public class CRSemantics implements Semantics {
                 if(crGraph.activities.get(i).id == ids.get(i))
                     if(isExecutable(crGraph, ids.get(i)))
                     	crGraph.activities.get(i).isExecuted = true;
+                		crGraph.activities.get(i).isPending = false;
                     else
                         throw new Exception("Event not executable!!!!");
             }
@@ -92,11 +93,21 @@ public class CRSemantics implements Semantics {
     		
         for(int i = 0; i < crGraph.activities.size(); i++){
         	
-        	Graph nestedGraph = crGraph.activities.get(i).nestedGraph;
-        	Semantics semantics = semanticsFactory.getSemantics(nestedGraph);
+        	ConresActivity activity = crGraph.activities.get(i);
         	
-            if(crGraph.activities.get(i).isPending || semantics.isFinished(nestedGraph))
-                return false;
+        	if(activity.isPending == true){
+        		return false;
+        	}
+        	
+        	if (activity.nestedGraph != null){
+        		//Check if nested graph is done
+        		Graph nestedGraph = activity.nestedGraph;
+            	Semantics semantics = semanticsFactory.getSemantics(nestedGraph);
+            	
+            	if(semantics.isFinished(nestedGraph) == false){
+            		return false;
+            	}
+        	}
         return true;
     }
 
