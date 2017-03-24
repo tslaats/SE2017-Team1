@@ -3,7 +3,6 @@ package graph;
 import java.awt.Point;
 
 import interfaces.Graph;
-import java.awt.Point;
 
 public class ConresActivity {
     public int id;
@@ -14,7 +13,7 @@ public class ConresActivity {
     public boolean isPending;
     public Graph nestedGraph = null;
 
-    public ConresActivity(int id, Point position, String name, String role, boolean isPending, Graph nestedGraph){
+    public ConresActivity(int id, Point position, String name, String role, boolean isPending, Graph nestedGraph) {
         this.id = id;
         this.position = position;
         this.name = name;
@@ -24,7 +23,7 @@ public class ConresActivity {
         this.isExecuted = false;
     }
 
-    public ConresActivity(int id, Point position, String name, String role, boolean isPending){
+    public ConresActivity(int id, Point position, String name, String role, boolean isPending) {
         this.id = id;
         this.position = position;
         this.name = name;
@@ -32,8 +31,9 @@ public class ConresActivity {
         this.isPending = isPending;
         this.isExecuted = false;
     }
-    
-    public String toString(){
+
+    @Override
+    public String toString() {
         return " ";
     }
 }
