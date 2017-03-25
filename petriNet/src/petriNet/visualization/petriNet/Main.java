@@ -1,5 +1,4 @@
-package petriNet.visualization.petriNet;
-
+package src;
 import javax.swing.JFrame;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -99,7 +98,7 @@ public class Main {
         JFrame frame = new JFrame("Test");
 
         frame.add(g);
-        frame.setSize(1400, 700);
+        frame.setSize(1000, 800);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         

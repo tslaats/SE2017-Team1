@@ -1,5 +1,4 @@
-package petriNet.visualization.petriNet;
-
+package src;
 /**
  *  @project >> Software Engineering 2017
  *  @authors >> Emil, Frederik, Mads, Susanne, Philip Falck

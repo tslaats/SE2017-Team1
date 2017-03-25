@@ -1,5 +1,4 @@
-package petriNet.visualization.petriNet;
-
+package src;
 /**
  *  @project >> Software Engineering 2017
  *  @authors >> Emil, Frederik, Mads, Susanne, Philip Falck
@@ -9,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  *  This is the petri graph base data structure. It extends from the super class
@@ -22,7 +20,6 @@ public class PetriNet extends JPanel {
     private Place end = null;
     private ArrayList<Transition> transitions = new ArrayList<Transition>();
     private ArrayList<Place> places = new ArrayList<Place>();
-    //private ArrayList<Connection> connections = new ArrayList<Connection>();
     
     /**
      *  This is an empty constructor, that is used to instantiate a new instance
