@@ -115,7 +115,7 @@ public class CRSemantics implements Semantics {
 
                     // Check all condition relations
                     if (!noBlockingConditions(activity, crGraph)) {
-                        throw new Exception(ExceptionTags.InvalidActionException.toString());
+                        throw new Exception(ExceptionTags.BlockingConditionException.toString());
                     }
 
                     // Check if it makes anything pending, and mark them as
