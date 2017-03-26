@@ -24,6 +24,7 @@ public class Unittests {
     ConresActivity implementActivity;
     ConresActivity designActivity;
     CRSemantics crSemantics;
+    static int numberOfTestEvents = 1000;
 
     @Before
     public void setUp() {
@@ -201,5 +202,75 @@ public class Unittests {
          */
         List<Integer> possibleActions = crSemantics.getPossibleActions(testGraph);
         assertTrue(possibleActions.size() == 0);
+    }
+
+    @Test
+    public void TestInvalidGraph() throws Exception {
+
+    }
+
+    /*
+     * This is a performance test that makes sure that the time constraints are
+     * complied with. For 25 events with no relations (at least not specified as
+     * a requirement) it must not take more than one second to execute.
+     */
+    @Test
+    public void TestPerformance() throws Exception {
+        long start = System.currentTimeMillis();
+
+        // Create graph with 1 main event and 24 others. No relations
+        List<ConresActivity> activities = new ArrayList<>();
+        ConresActivity mainActivity = new ConresActivity(0, new Point(0, 0), "Main activity", "Role", true);
+        activities.add(mainActivity);
+        for (int i = 1; i < 25; i++) {
+            ConresActivity act = new ConresActivity(i, new Point(0, 0), "Name" + i, "Role", true);
+
+            activities.add(act);
+        }
+        ConresGraph crGraph = new ConresGraph(activities, new ArrayList<>());
+
+        while (!crSemantics.isFinished(crGraph)) {
+            List<Integer> possibleActions = crSemantics.getPossibleActions(crGraph);
+            for (int i = 0; i < possibleActions.size(); i++) {
+                List<Integer> actionsToExecute = new ArrayList<>();
+                actionsToExecute.add(possibleActions.get(i));
+                crSemantics.executeAction(crGraph, actionsToExecute);
+            }
+        }
+        assertTrue((System.currentTimeMillis() - start) < 1000);
+    }
+
+    /*
+     * This test makes sure that the implementation does not consume too many
+     * resources to have an excess amount of events and relations
+     */
+    @Test
+    public void TestPerformanceOverkill() throws Exception {
+        long start = System.currentTimeMillis();
+
+        // Create graph with 1 main event and 24 others with a condition
+        // relation to the main event
+        List<ConresActivity> activities = new ArrayList<>();
+        List<ConresRelation> relations = new ArrayList<>();
+        ConresActivity mainActivity = new ConresActivity(0, new Point(0, 0), "Main activity", "Role", true);
+        activities.add(mainActivity);
+        for (int i = 1; i < numberOfTestEvents; i++) {
+            ConresActivity act = new ConresActivity(i, new Point(0, 0), "Name" + i, "Role", true);
+            ConresRelation rel = new ConresRelation(mainActivity, act, Type.CONDITION);
+
+            activities.add(act);
+            relations.add(rel);
+        }
+        ConresGraph crGraph = new ConresGraph(activities, relations);
+
+        while (!crSemantics.isFinished(crGraph)) {
+            List<Integer> possibleActions = crSemantics.getPossibleActions(crGraph);
+            for (int i = 0; i < possibleActions.size(); i++) {
+                List<Integer> actionsToExecute = new ArrayList<>();
+                actionsToExecute.add(possibleActions.get(i));
+                crSemantics.executeAction(crGraph, actionsToExecute);
+            }
+        }
+        assertTrue((System.currentTimeMillis() - start) < 1000);
     }
 }

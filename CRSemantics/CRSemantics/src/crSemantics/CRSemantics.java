@@ -82,7 +82,6 @@ public class CRSemantics implements Semantics {
         if (ids.size() > 1) {
             for (int i = 0; i < crGraph.activities.size(); i++) {
                 if (crGraph.activities.get(i).id == ids.get(0)) {
-
                     // TODO check all condition relations
                     ConresActivity activity = crGraph.activities.get(i);
                     if (!noBlockingConditions(activity, crGraph)) {
@@ -102,7 +101,6 @@ public class CRSemantics implements Semantics {
                     activity.nestedGraph = semantics.executeAction(activity.nestedGraph, ids);
                 }
             }
-
         }
 
         // Its activity in this graph that needs execution
