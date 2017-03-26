@@ -1,12 +1,14 @@
 package testing;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import crSemantics.CRSemantics;
@@ -21,14 +23,16 @@ public class Unittests {
     ConresGraph testGraph;
     ConresActivity implementActivity;
     ConresActivity designActivity;
+    CRSemantics crSemantics;
 
-    protected void setUp() {
+    @Before
+    public void setUp() {
         ConresActivity elicitActivity = new ConresActivity(0, new Point(0, 0), "Elicit Requirements", "role", false);
         designActivity = new ConresActivity(1, new Point(0, 0), "Design System", "role", false);
         implementActivity = new ConresActivity(2, new Point(0, 0), "Implement System", "role", true);
         ConresActivity changeRequestActivity = new ConresActivity(3, new Point(0, 0), "Change Request", "role", false);
 
-        ArrayList<ConresActivity> activityList = new ArrayList<ConresActivity>();
+        List<ConresActivity> activityList = new ArrayList<>();
         activityList.add(elicitActivity);
         activityList.add(designActivity);
         activityList.add(implementActivity);
@@ -40,19 +44,19 @@ public class Unittests {
                 Type.CONDITION);
         ConresRelation changeImplementRelation = new ConresRelation(changeRequestActivity, implementActivity,
                 Type.RESPONSE);
-        ArrayList<ConresRelation> relationList = new ArrayList<ConresRelation>();
+        List<ConresRelation> relationList = new ArrayList<>();
         relationList.add(elicitDesignRelation);
         relationList.add(designImplementRelation);
         relationList.add(implementChangeRelation);
         relationList.add(changeImplementRelation);
 
         testGraph = new ConresGraph(activityList, relationList);
+
+        crSemantics = new CRSemantics();
     }
 
     @Test
     public void ExecuteAnInvalidAction() {
-        CRSemantics crSemantics = new CRSemantics();
-
         // Try to execute an event that depends on another event to be executed
         // first
         List<Integer> actionsToExecute = new ArrayList<>();
@@ -60,7 +64,7 @@ public class Unittests {
         try {
             crSemantics.executeAction(testGraph, actionsToExecute);
         } catch (Exception e) {
-            assertEquals(e.getMessage(), ExceptionTags.BlockingConditionException);
+            assertEquals(ExceptionTags.BlockingConditionException.toString(), e.getMessage());
             return;
         }
         assertTrue(false);
@@ -68,16 +72,12 @@ public class Unittests {
 
     @Test
     public void ExecuteEmptyActionList() {
-        // Create empty graph
-        CRSemantics crSemantics = new CRSemantics();
-
         // Try to execute with an empty list of ids
         try {
-            crSemantics.executeAction(new ConresGraph(new ArrayList<ConresActivity>(), new ArrayList<ConresRelation>()),
-                    new ArrayList<Integer>());
+            crSemantics.executeAction(testGraph, new ArrayList<>());
         } catch (Exception e) {
-            // System.out.println(e.getMessage());
-            assertEquals(e.getMessage(), ExceptionTags.EmptyListException.toString());
+            // System.out.println(testGraph == null);
+            assertEquals(ExceptionTags.EmptyListException.toString(), e.getMessage());
             return;
         }
         assertTrue(false);
@@ -85,22 +85,6 @@ public class Unittests {
 
     @Test
     public void ExecuteValidAction() throws Exception {
-        // Create a graph with one response relation connected to two activities
-
-        ConresActivity act = new ConresActivity(0, new Point(2, 2), "First event", "role?", false);
-        ConresActivity act2 = new ConresActivity(1, new Point(2, 2), "Second event", "role?", false);
-        ConresRelation rel = new ConresRelation(act, act2, Type.RESPONSE);
-
-        List<ConresActivity> actions = new ArrayList<>();
-        List<ConresRelation> relations = new ArrayList<>();
-
-        actions.add(act);
-        actions.add(act2);
-        relations.add(rel);
-        ConresGraph graph = new ConresGraph(actions, relations);
-
-        CRSemantics crSemantics = new CRSemantics();
-
         // Try to execute an event that does not depend on another event to be
         // executed first
         List<Integer> actionsToExecute = new ArrayList<>();
@@ -118,12 +102,104 @@ public class Unittests {
         activities.add(act);
         ConresGraph graph = new ConresGraph(activities, new ArrayList<>());
 
-        CRSemantics crSemantics = new CRSemantics();
-
         // Try to execute a lone event
         List<Integer> actionsToExecute = new ArrayList<>();
         actionsToExecute.add(0);
         ConresGraph newGraph = crSemantics.executeAction(graph, actionsToExecute);
         assertTrue(newGraph.activities.get(0).isExecuted);
+    }
+
+    @Test
+    public void TestIsFinished() throws Exception {
+        // Execute all pending events and its condition relations
+        for (int i = 0; i < 3; i++) {
+            List<Integer> actionsToExecute = new ArrayList<>();
+            actionsToExecute.add(i);
+            crSemantics.executeAction(testGraph, actionsToExecute);
+        }
+
+        assertTrue(crSemantics.isFinished(testGraph));
+    }
+
+    @Test
+    public void TestIsFinished2() throws Exception {
+        // Execute 2 non-pending events. Leave pending events alone
+        for (int i = 0; i < 2; i++) {
+            List<Integer> actionsToExecute = new ArrayList<>();
+            actionsToExecute.add(i);
+            crSemantics.executeAction(testGraph, actionsToExecute);
+        }
+
+        assertFalse(crSemantics.isFinished(testGraph));
+    }
+
+    @Test
+    public void TestIsFinished3() throws Exception {
+        // Do nothing; leave pending events alone
+        assertFalse(crSemantics.isFinished(testGraph));
+    }
+
+    @Test
+    public void TestGetPossibleActions() throws Exception {
+        List<Integer> possibleActions = crSemantics.getPossibleActions(testGraph);
+        assertTrue(possibleActions.contains(0));
+        assertTrue(possibleActions.size() == 1);
+    }
+
+    @Test
+    public void TestGetPossibleActions2() throws Exception {
+        for (int i = 0; i < 1; i++) {
+            List<Integer> actionsToExecute = new ArrayList<>();
+            actionsToExecute.add(i);
+            crSemantics.executeAction(testGraph, actionsToExecute);
+        }
+
+        List<Integer> possibleActions = crSemantics.getPossibleActions(testGraph);
+        assertTrue(possibleActions.contains(1));
+        assertTrue(possibleActions.size() == 1);
+    }
+
+    @Test
+    public void TestGetPossibleActions3() throws Exception {
+        for (int i = 0; i < 2; i++) {
+            List<Integer> actionsToExecute = new ArrayList<>();
+            actionsToExecute.add(i);
+            crSemantics.executeAction(testGraph, actionsToExecute);
+        }
+
+        List<Integer> possibleActions = crSemantics.getPossibleActions(testGraph);
+        assertTrue(possibleActions.contains(2));
+        assertTrue(possibleActions.size() == 1);
+    }
+
+    @Test
+    public void TestGetPossibleActions4() throws Exception {
+        for (int i = 0; i < 3; i++) {
+            List<Integer> actionsToExecute = new ArrayList<>();
+            actionsToExecute.add(i);
+            crSemantics.executeAction(testGraph, actionsToExecute);
+        }
+
+        /*
+         * Notice here that we do not return executed events as possible actions
+         */
+        List<Integer> possibleActions = crSemantics.getPossibleActions(testGraph);
+        assertTrue(possibleActions.contains(3));
+        assertTrue(possibleActions.size() == 1);
+    }
+
+    @Test
+    public void TestGetPossibleActions5() throws Exception {
+        for (int i = 0; i < 4; i++) {
+            List<Integer> actionsToExecute = new ArrayList<>();
+            actionsToExecute.add(i);
+            crSemantics.executeAction(testGraph, actionsToExecute);
+        }
+
+        /*
+         * Notice here that we do not return executed events as possible actions
+         */
+        List<Integer> possibleActions = crSemantics.getPossibleActions(testGraph);
+        assertTrue(possibleActions.size() == 0);
     }
 }
