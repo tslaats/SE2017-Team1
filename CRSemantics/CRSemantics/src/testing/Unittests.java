@@ -96,7 +96,7 @@ public class Unittests {
 
     @Test
     public void ExecuteValidLoneAction() throws Exception {
-        // Create a graph with one relation connected to two activities
+        // Create a graph with one action, which should always be executable
         ConresActivity act = new ConresActivity(0, new Point(0, 0), "First event", "role", true);
 
         List<ConresActivity> activities = new ArrayList<>();
@@ -141,7 +141,7 @@ public class Unittests {
     }
 
     @Test
-    public void TestGetPossibleActions() throws Exception {
+    public void TestGetPossibleActions1() throws Exception {
         List<Integer> possibleActions = crSemantics.getPossibleActions(testGraph);
         assertTrue(possibleActions.contains(0));
         assertTrue(possibleActions.size() == 1);
@@ -149,48 +149,19 @@ public class Unittests {
 
     @Test
     public void TestGetPossibleActions2() throws Exception {
-        for (int i = 0; i < 1; i++) {
-            List<Integer> actionsToExecute = new ArrayList<>();
-            actionsToExecute.add(i);
-            crSemantics.executeAction(testGraph, actionsToExecute);
-        }
-
-        List<Integer> possibleActions = crSemantics.getPossibleActions(testGraph);
-        assertTrue(possibleActions.contains(1));
-        assertTrue(possibleActions.size() == 1);
-    }
-
-    @Test
-    public void TestGetPossibleActions3() throws Exception {
-        for (int i = 0; i < 2; i++) {
-            List<Integer> actionsToExecute = new ArrayList<>();
-            actionsToExecute.add(i);
-            crSemantics.executeAction(testGraph, actionsToExecute);
-        }
-
-        List<Integer> possibleActions = crSemantics.getPossibleActions(testGraph);
-        assertTrue(possibleActions.contains(2));
-        assertTrue(possibleActions.size() == 1);
-    }
-
-    @Test
-    public void TestGetPossibleActions4() throws Exception {
         for (int i = 0; i < 3; i++) {
             List<Integer> actionsToExecute = new ArrayList<>();
             actionsToExecute.add(i);
             crSemantics.executeAction(testGraph, actionsToExecute);
+            
+            List<Integer> possibleActions = crSemantics.getPossibleActions(testGraph);
+            assertTrue(possibleActions.contains(i+1));
+            assertTrue(possibleActions.size() == 1);
         }
-
-        /*
-         * Notice here that we do not return executed events as possible actions
-         */
-        List<Integer> possibleActions = crSemantics.getPossibleActions(testGraph);
-        assertTrue(possibleActions.contains(3));
-        assertTrue(possibleActions.size() == 1);
     }
 
     @Test
-    public void TestGetPossibleActions5() throws Exception {
+    public void TestGetPossibleActions3() throws Exception {
         for (int i = 0; i < 4; i++) {
             List<Integer> actionsToExecute = new ArrayList<>();
             actionsToExecute.add(i);
