@@ -1,31 +1,28 @@
 package structure;
 import java.awt.Point;
 
-public class Activity {
+import resources.Constants;
+
+public class Activity extends ConresActivity {
 	private Point center;
-	private String title = "default";
-	private String body = "default";
-	private Boolean pending = false;
-	private Boolean executed = false;
-	private Boolean hasPetri = false;
+
 
 	// constructors
-	public Activity(Point center, String title, String body, Boolean pending, Boolean executed, Boolean hasPetri) {
-		this.center = center;
-		this.title = title;
-		this.body = body;
-		this.pending = pending;
-		this.executed = executed;
-		this.hasPetri = hasPetri;
-	}
-	public Activity(Point center, String title, String body) {
-		this.center = center;
-		this.title = title;
-		this.body = body;
-	}
-	public Activity(Point center) {
+	public Activity(Point position, String title, String body, Boolean pending, Boolean executed, Boolean hasPetri) {
+		super(-1, position, title, body, pending, executed, hasPetri);
+		int x = this.position.x + (Constants.ACTIVITY_WIDTH/2);
+	  	int y = this.position.y + (Constants.ACTIVITY_HEIGHT/2);
+	  	Point center = new Point(x,y); 
 		this.center = center;
 	}
+	public Activity(Point position, String title, String body) {
+		super(-1, position, title, body, false, false, false);
+		int x = this.position.x + (Constants.ACTIVITY_WIDTH/2);
+	  	int y = this.position.y + (Constants.ACTIVITY_HEIGHT/2);
+	  	Point center = new Point(x,y); 
+		this.center = center;
+	}
+	
 
 	//for comparing activities, an activity is defined by its title only which is probably not ideal...?
 	@Override
@@ -34,7 +31,7 @@ public class Activity {
             return false;
        }
        final Activity other = (Activity) obj;
-       if (other.getBody() == this.body) {
+       if (other.getBody() == this.name) {
             return true;
        }
        return false;
@@ -45,11 +42,11 @@ public class Activity {
 	}
 	// get executed status
 	public Boolean getExecuted() {
-		return this.executed;
+		return this.isExecuted;
 	}
 	// get pending status
 	public Boolean getPending() {
-		return this.pending;
+		return this.isPending;
 	}
 	// get petri status
 	public Boolean containsPetri() {
@@ -57,10 +54,10 @@ public class Activity {
 	}
 	// get title string
 	public String getTitle() {
-		return this.title;
+		return this.role;
 	}
 	// get description/body string
 	public String getBody() {
-		return this.body;
+		return this.name;
 	}
 }
