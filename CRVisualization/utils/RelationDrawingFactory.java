@@ -139,20 +139,20 @@ public class RelationDrawingFactory {
       Point p4 = new Point(0,0);
       if(dir == "R") {
         p2 = new Point(start.x + Constants.ACTIVITY_PADDING, start.y);
-        p3 = new Point(start.x + Constants.ACTIVITY_PADDING, start.y + Constants.ACTIVITY_PADDING/2);
-        p4 = new Point(start.x, start.y + Constants.ACTIVITY_PADDING/2);
+        p3 = new Point(start.x + Constants.ACTIVITY_PADDING, start.y + Constants.ACTIVITY_HEIGHT/2);
+        p4 = new Point(start.x, start.y + Constants.ACTIVITY_HEIGHT/2);
       }else if(dir == "L") {
         p2 = new Point(start.x - Constants.ACTIVITY_PADDING, start.y);
-        p3 = new Point(start.x - Constants.ACTIVITY_PADDING, start.y - Constants.ACTIVITY_PADDING/2);
-        p4 = new Point(start.x, start.y - Constants.ACTIVITY_PADDING/2);
+        p3 = new Point(start.x - Constants.ACTIVITY_PADDING, start.y - Constants.ACTIVITY_HEIGHT/2);
+        p4 = new Point(start.x, start.y - Constants.ACTIVITY_HEIGHT/2);
       }else if(dir == "U") {
         p2 = new Point(start.x, start.y - Constants.ACTIVITY_PADDING);
-        p3 = new Point(start.x + Constants.ACTIVITY_PADDING/2, start.y - Constants.ACTIVITY_PADDING);
-        p4 = new Point(start.x + Constants.ACTIVITY_PADDING/2, start.y);
+        p3 = new Point(start.x + Constants.ACTIVITY_WIDTH/2, start.y - Constants.ACTIVITY_PADDING);
+        p4 = new Point(start.x + Constants.ACTIVITY_WIDTH/2, start.y);
       }else if(dir == "D") {
         p2 = new Point(start.x, start.y + Constants.ACTIVITY_PADDING);
-        p3 = new Point(start.x + Constants.ACTIVITY_PADDING/2, start.y + Constants.ACTIVITY_PADDING);
-        p4 = new Point(start.x + Constants.ACTIVITY_PADDING/2, start.y);
+        p3 = new Point(start.x - Constants.ACTIVITY_WIDTH/2, start.y + Constants.ACTIVITY_PADDING);
+        p4 = new Point(start.x - Constants.ACTIVITY_WIDTH/2, start.y);
       }else{
         System.out.println("drawLineBetweenActivities: INVALID DIR given");
       }
@@ -253,16 +253,16 @@ public class RelationDrawingFactory {
         Point selfEnd = new Point();
         if(dir == "L") {
           dir = "R";
-          selfEnd = new Point(p1.x, p1.y - Constants.ACTIVITY_PADDING/2);
+          selfEnd = new Point(p1.x, p1.y - Constants.ACTIVITY_HEIGHT/2);
         }else if(dir == "R") {
           dir = "L";
-          selfEnd = new Point(p1.x, p1.y + Constants.ACTIVITY_PADDING/2);
+          selfEnd = new Point(p1.x, p1.y + Constants.ACTIVITY_HEIGHT/2);
         }else if(dir == "D") {
           dir = "U";
-          selfEnd = new Point(p1.x + Constants.ACTIVITY_PADDING/2, p1.y);
+          selfEnd = new Point(p1.x - Constants.ACTIVITY_WIDTH/2, p1.y);
         }else if(dir == "U") {
           dir = "D";
-          selfEnd = new Point(p1.x + Constants.ACTIVITY_PADDING/2, p1.y);
+          selfEnd = new Point(p1.x + Constants.ACTIVITY_WIDTH/2, p1.y);
         }
         drawTriangle(g2d, selfEnd, dir);
       }else{
@@ -345,17 +345,17 @@ public class RelationDrawingFactory {
       int minSurface = Math.min(Math.min(Math.min(rightRels.size(), leftRels.size()), topRels.size()), bottomRels.size());
       if(minSurface == rightRels.size()) {
         leastBusySurface = "R";
-        selfRel.setOut(new Point(act.getCenter().x + Constants.ACTIVITY_WIDTH/2, act.getCenter().y - Constants.ACTIVITY_HEIGHT/2 + Constants.TRIANGLE_HEIGHT/2));
+        selfRel.setOut(new Point(act.getCenter().x + Constants.ACTIVITY_WIDTH/2, act.getCenter().y - Constants.TRIANGLE_HEIGHT/2));
         System.out.println("hej" + selfRel.getOut());
       }else if(minSurface == leftRels.size()) {
         leastBusySurface = "L";
         selfRel.setOut(new Point(act.getCenter().x - Constants.ACTIVITY_WIDTH/2, act.getCenter().y + Constants.ACTIVITY_HEIGHT/2 - Constants.TRIANGLE_HEIGHT/2));
       }else if(minSurface == topRels.size()) {
         leastBusySurface = "T";
-        selfRel.setOut(new Point(act.getCenter().x - Constants.ACTIVITY_WIDTH/2 + Constants.TRIANGLE_HEIGHT/2, act.getCenter().y - Constants.ACTIVITY_HEIGHT/2));
+        selfRel.setOut(new Point(act.getCenter().x - Constants.TRIANGLE_HEIGHT/2, act.getCenter().y - Constants.ACTIVITY_HEIGHT/2));
       }else if(minSurface == bottomRels.size()) {
         leastBusySurface = "B";
-        selfRel.setOut(new Point(act.getCenter().x + Constants.TRIANGLE_HEIGHT/2, act.getCenter().y + Constants.ACTIVITY_HEIGHT/2));
+        selfRel.setOut(new Point(act.getCenter().x + Constants.ACTIVITY_WIDTH/2 - Constants.TRIANGLE_HEIGHT/2, act.getCenter().y + Constants.ACTIVITY_HEIGHT/2));
       }
       returnRelations.add(selfRel);
     }
@@ -369,7 +369,7 @@ public class RelationDrawingFactory {
       surfaceLength = Constants.ACTIVITY_HEIGHT / 2;
       spacing = surfaceLength / numberOutgoing;
       if(leastBusySurface == "R") {
-        offset = Constants.ACTIVITY_PADDING + spacing;
+      
       }
       rightRels = sortByChildY(rightRels);
       for(Relation rel : rightRels) {
@@ -387,7 +387,7 @@ public class RelationDrawingFactory {
       surfaceLength = Constants.ACTIVITY_HEIGHT / 2;
       spacing = surfaceLength / numberOutgoing;
       if(leastBusySurface == "L") {
-        offset = Constants.ACTIVITY_PADDING + spacing;
+        //offset = Constants.ACTIVITY_PADDING + spacing;
       }
       leftRels = sortByChildY(leftRels);
       for(Relation rel : leftRels) {
@@ -405,7 +405,7 @@ public class RelationDrawingFactory {
       surfaceLength = Constants.ACTIVITY_WIDTH / 2;
       spacing = surfaceLength / numberOutgoing;
       if(leastBusySurface == "T") {
-        offset = Constants.ACTIVITY_PADDING + spacing;
+        //offset = Constants.ACTIVITY_PADDING + spacing;
       }
       topRels = sortByChildX(topRels);
       for(Relation rel : topRels) {
@@ -423,7 +423,7 @@ public class RelationDrawingFactory {
       surfaceLength = Constants.ACTIVITY_WIDTH / 2;
       spacing = surfaceLength / numberOutgoing;
       if(leastBusySurface == "B") {
-        offset = Constants.ACTIVITY_PADDING + spacing;
+        //offset = Constants.ACTIVITY_PADDING + spacing;
       }
       bottomRels = sortByChildX(bottomRels);
       for(Relation rel : bottomRels) {
