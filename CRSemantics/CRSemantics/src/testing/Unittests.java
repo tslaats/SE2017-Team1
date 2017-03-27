@@ -182,8 +182,10 @@ public class Unittests {
         nestedActivityList.add(nestedActivity);
 
         ConresGraph nestedGraph = new ConresGraph(nestedActivityList, new ArrayList<ConresRelation>());
+        List<Integer> expectedList = new ArrayList<Integer>();
+        expectedList.add(0);
 
-        assertEquals(crSemantics.getPossibleActions(nestedGraph), 0);
+        assertEquals(crSemantics.getPossibleActions(nestedGraph), expectedList);
     }
 
     /*
