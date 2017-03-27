@@ -177,7 +177,13 @@ public class Unittests {
 
     @Test
     public void TestInvalidGraph() throws Exception {
+        ConresActivity nestedActivity = new ConresActivity(10, new Point(0, 0), "test", "test", true, testGraph);
+        List<ConresActivity> nestedActivityList = new ArrayList<ConresActivity>();
+        nestedActivityList.add(nestedActivity);
 
+        ConresGraph nestedGraph = new ConresGraph(nestedActivityList, new ArrayList<ConresRelation>());
+
+        assertEquals(crSemantics.getPossibleActions(nestedGraph), 0);
     }
 
     /*
