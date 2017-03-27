@@ -111,6 +111,25 @@ public class Unittests {
     }
 
     @Test
+    public void ExecuteNestedGraphAction() throws Exception {
+        ConresActivity nestedActivity = new ConresActivity(10, new Point(0, 0), "test", "test", true, testGraph);
+        List<ConresActivity> nestedActivityList = new ArrayList<ConresActivity>();
+        nestedActivityList.add(nestedActivity);
+
+        ConresGraph nestedGraph = new ConresGraph(nestedActivityList, new ArrayList<ConresRelation>());
+        List<Integer> actionsToExecute = new ArrayList<Integer>();
+        actionsToExecute.add(10);
+        actionsToExecute.add(0);
+        
+        ConresGraph newGraph = crSemantics.executeAction(nestedGraph, actionsToExecute);
+        
+        ConresGraph newNested = (ConresGraph) newGraph.activities.get(0).nestedGraph;
+
+        assertTrue(newNested.activities.get(0).isExecuted);
+    }
+    
+    
+    @Test
     public void TestIsFinished() throws Exception {
         // Execute all pending events and its condition relations
         for (int i = 0; i < 3; i++) {
@@ -138,6 +157,25 @@ public class Unittests {
     public void TestIsFinished3() throws Exception {
         // Do nothing; leave pending events alone
         assertFalse(crSemantics.isFinished(testGraph));
+    }
+    
+    public void TestIsFinishedNested() throws Exception {
+    	// Execute all pending events and its condition relations
+        for (int i = 0; i < 3; i++) {
+            List<Integer> actionsToExecute = new ArrayList<>();
+            actionsToExecute.add(i);
+            crSemantics.executeAction(testGraph, actionsToExecute);
+        }
+        
+        // Add a finished graph as a nested graph
+        ConresActivity nestedActivity = new ConresActivity(10, new Point(0, 0), "test", "test", true, testGraph);
+        List<ConresActivity> nestedActivityList = new ArrayList<ConresActivity>();
+        nestedActivityList.add(nestedActivity);
+        ConresGraph nestedGraph = new ConresGraph(nestedActivityList, new ArrayList<ConresRelation>());
+        
+        assertTrue(crSemantics.isFinished(nestedGraph));
+        
+        
     }
 
     @Test
@@ -176,7 +214,7 @@ public class Unittests {
     }
 
     @Test
-    public void TestInvalidGraph() throws Exception {
+    public void TestGetPossibleActions4() throws Exception {
         ConresActivity nestedActivity = new ConresActivity(10, new Point(0, 0), "test", "test", true, testGraph);
         List<ConresActivity> nestedActivityList = new ArrayList<ConresActivity>();
         nestedActivityList.add(nestedActivity);
@@ -227,8 +265,6 @@ public class Unittests {
     public void TestPerformanceOverkill() throws Exception {
         long start = System.currentTimeMillis();
 
-        // Create graph with 1 main event and 24 others with a condition
-        // relation to the main event
         List<ConresActivity> activities = new ArrayList<>();
         List<ConresRelation> relations = new ArrayList<>();
         ConresActivity mainActivity = new ConresActivity(0, new Point(0, 0), "Main activity", "Role", true);
