@@ -1,5 +1,4 @@
-package petriNet.src.petriNet.visualization.petriNet;
-
+package src;
 /**
  *  @project >> Software Engineering 2017
  *  @authors >> Emil, Frederik, Mads, Susanne, Philip Falck
@@ -97,18 +96,26 @@ public class Transition {
     }
 
     public void paintTransition(Graphics g){
-        int width = 10;
+    	String label = name;
+    	if (name.length() > 15 && !name.isEmpty()) {
+    		label = name.substring(0,15);
+    	}
+        int width = (int) Math.ceil(7.5*name.length());
         int height = 40;
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.WHITE);
-        Rectangle2D.Double rect = new Rectangle2D.Double((position.x - (width / 2)), (position.y - (height / 2)), width, height);
+        Rectangle2D.Double rect = new Rectangle2D.Double(position.x - (width / 2), position.y - (height / 2), width, height);
         g2d.fill(rect);
 
         g2d.setColor(Color.BLUE);
         g2d.draw(rect);
 
-        if ((name != null) && (!name.isEmpty())){
-            g2d.drawString(name, (position.x - (width - 5)), (position.y - (height + 2)));
+        if ((label != null) && (!label.isEmpty())){
+        	FontMetrics fm = g.getFontMetrics();
+            int stringWidth = fm.stringWidth( label );
+            int startX = position.x - (width / 2) + ( ( width - stringWidth ) / 2 );
+            int startY = position.y - (height / 2) + ( ( height + fm.getHeight() ) / 2 );
+            g2d.drawString(label, startX, startY);
         }
     }
 }

@@ -11,11 +11,11 @@
     </coordinates>
     <panel_attributes>ConresGraph
 --
-+ activities : ArrayList&lt;ConresActivity&gt; 
-+ relations : ArrayList&lt;ConresRelation&gt; 
++ activities : List&lt;ConresActivity&gt; 
++ relations : List&lt;ConresRelation&gt; 
 --
-+ ConresGraph(activities : ArrayList&lt;ConresActivity&gt; , 
-    relations : ArrayList&lt;ConresRelation&gt; )
++ ConresGraph(activities : List&lt;ConresActivity&gt; , 
+    relations : List&lt;ConresRelation&gt; )
 </panel_attributes>
     <additional_attributes/>
   </element>
