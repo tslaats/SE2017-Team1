@@ -39,9 +39,10 @@ public class PetriNet extends JPanel {
     }
     
     /**
-     *  This tries to retrieve/set a place, and if it has been assigned it will then
-     *  return it. However in the case that it hasn't been set and someone tries
-     *  to get it, it will throw an exception as that is an illegal graph action
+     * This tries to retrieve/set a place, and if it has been assigned it will then
+     * return it. However in the case that it hasn't been set and someone tries
+     * to get it, it will throw an exception as that is an illegal graph action
+     * @return start - a Place
      * @throws petriNetException 
      */
     public Place getStart () throws petriNetException {
@@ -53,7 +54,11 @@ public class PetriNet extends JPanel {
         }
     }
 
-    // setStart
+    /**
+     * Set the start
+     * @param inputStart - a Place
+     * @throws petriNetException
+     */
     public void setStart(Place inputStart) throws petriNetException {
         if (inputStart == null) {
             throw new petriNetException(petriNetConstants.NULL_INPUT);
@@ -64,9 +69,10 @@ public class PetriNet extends JPanel {
     }
     
     /**
-     *  This tries to retrieve a place, and if it has been assigned it will then
-     *  return it. However in the case that it hasn't been set and someone tries
-     *  to get it, it will throw an exception as that is an illegal graph action
+     * This tries to retrieve a place, and if it has been assigned it will then
+     * return it. However in the case that it hasn't been set and someone tries
+     * to get it, it will throw an exception as that is an illegal graph action
+     * @return start - a Place
      * @throws petriNetException 
      */
     public Place getEnd () throws petriNetException {
@@ -78,7 +84,12 @@ public class PetriNet extends JPanel {
         }
     }
 
-    // setEnd
+
+    /**
+     * Sets the end
+     * @param inputEnd - a Place
+     * @throws petriNetException
+     */
     public void setEnd(Place inputEnd) throws petriNetException {
         if (inputEnd == null) {
             throw new petriNetException(petriNetConstants.NULL_INPUT);
@@ -88,6 +99,11 @@ public class PetriNet extends JPanel {
         }
     }
     
+    /**
+     * Add a single place
+     * @param place - a Place
+     * @throws petriNetException
+     */
     public void addSinglePlace(Place place) throws petriNetException {
     	if (place == null) {
             throw new petriNetException(petriNetConstants.NULL_INPUT);
@@ -102,6 +118,11 @@ public class PetriNet extends JPanel {
     	places.add(place);
     }
     
+    /**
+     * Add a list of places
+     * @param places - an ArrayList
+     * @throws petriNetException
+     */
     public void addPlaces(ArrayList<Place> places) throws petriNetException {
     	if (places == null) {
             throw new petriNetException(petriNetConstants.NULL_INPUT);
@@ -120,6 +141,11 @@ public class PetriNet extends JPanel {
     	this.places.addAll(places);
     }
     
+    /**
+     * Add a single transition
+     * @param transition - a Transition
+     * @throws petriNetException
+     */
     public void addSingleTransition(Transition transition) throws petriNetException {
     	if (transition == null) {
             throw new petriNetException(petriNetConstants.NULL_INPUT);
@@ -134,6 +160,11 @@ public class PetriNet extends JPanel {
     	transitions.add(transition);
     }
     
+    /**
+     * Add a list of transitions
+     * @param transitions - an ArrayList
+     * @throws petriNetException
+     */
     public void addTransitions(ArrayList<Transition> transitions) throws petriNetException {
     	if (transitions == null) {
             throw new petriNetException(petriNetConstants.NULL_INPUT);
@@ -165,6 +196,11 @@ public class PetriNet extends JPanel {
 		}
     }
     
+    /**
+     * Remove a place 
+     * @param place - a Place
+     * @throws petriNetException
+     */
     public void removePlace(Place place) throws petriNetException {
     	if (place == null) {
             throw new petriNetException(petriNetConstants.NULL_INPUT);
@@ -186,6 +222,11 @@ public class PetriNet extends JPanel {
     	}
     }
     
+    /**
+     * Remove a transition
+     * @param transition - a Transition
+     * @throws petriNetException
+     */
     public void removeTransition(Transition transition) throws petriNetException {
     	if (transition == null) {
             throw new petriNetException(petriNetConstants.NULL_INPUT);
@@ -214,16 +255,18 @@ public class PetriNet extends JPanel {
     }
     
     /**
-     *  Since a start can be null, this getter allows a caller to check if there
-     *  is actually anything assigned to the variable, or if it is actually null
+     * Since a start can be null, this getter allows a caller to check if there
+     * is actually anything assigned to the variable, or if it is actually null
+     * 
      */
     public boolean hasStart () {
         return (start != null);
     }
     
     /**
-     *  Since an end can be null, this getter allows a caller, to check if there
-     *  is actually anything assigned to the variable, or if it is actually null
+     * Since an end can be null, this getter allows a caller, to check if there
+     * is actually anything assigned to the variable, or if it is actually null
+     * @return bool - true if it has a start, false otherwise
      */
     public boolean hasEnd () {
         return (end != null);

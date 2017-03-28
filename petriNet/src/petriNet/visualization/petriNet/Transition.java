@@ -1,7 +1,7 @@
 package petriNet.visualization.petriNet;
 /**
  *  @project >> Software Engineering 2017
- *  @authors >> Emil, Frederik, Mads, Susanne, Philip Falck
+ *  @authors >> Emil Bak, Frederik Henriksen, Mads, Susanne Truong, Philip Falck
  */
 
 import java.awt.*;
@@ -24,41 +24,74 @@ public class Transition {
     private ArrayList<Place> outgoing = new ArrayList<Place>();
     
     /**
-     *  This is a constructor, that creates a new instance of the transition and
-     *  populates all of the variables, such as the top left point of the object
-     *  and the given name of the transition, and every of the connecting places
+     * This is a constructor, that creates a new instance of the transition and
+     * populates all of the variables, such as the top left point of the object
+     * and the given name of the transition, and every of the connecting places
+     * @param id - int
+     * @param position - Point, is validated, so the transition does not go to a negative coordinate
+     * @param name - String
      * @throws petriNetException 
      */
     public Transition (int id, Point position, String name) throws petriNetException {
     	if (position.getX() < Math.ceil(7.5*name.length())/2 || position.getY() < 20) {
     		throw new petriNetException(petriNetConstants.INVALID_POSITION);
         }
-    	
+    	if (id < 0) {
+            throw new petriNetException(petriNetConstants.INVALID_ID);
+        }
+    	if (name.length() == 0) {
+            throw new petriNetException(petriNetConstants.INVALID_NAME);
+        }
         this.id = id;
         this.position = position;
         this.name = name;
     }
     
+    /**
+     * Gets the id
+     * @return id - an int
+     */
     public int getId() {
     	return id;
     }
     
+    /**
+     * Gets the position
+     * @return position - a Point
+     */
     public Point getPosition() {
     	return position;
     }
     
+    /**
+     * Gets the name
+     * @return name - a String
+     */
     public String getName() {
     	return name;
     }
     
+    /**
+     * Gets the list of incoming places
+     * @return incoming - An ArrayList of incoming transitions
+     */
     public ArrayList<Place> getIncoming() {
     	return incoming;
     }
     
+    /**
+     * Gets the list of outgoing places
+     * @return outgoing - An ArrayList of outgoing transitions
+     */
     public ArrayList<Place> getOutgoing() {
     	return outgoing;
     }
     
+    /**
+     * Set position
+     * @param position - new position
+     * @throws petriNetException
+     */
     public void setPosition(Point position) throws petriNetException {
     	if (position == null) {
             throw new petriNetException(petriNetConstants.NULL_INPUT);
@@ -70,10 +103,19 @@ public class Transition {
     	this.position = position;
     }
     
+    /**
+     * Set a new name for a place
+     * @param name - the new name
+     */
     public void setName(String name) {
     	this.name = name;
     }
     
+    /**
+     * Remove an incoming place
+     * @param toBeRemoved - a place to be removed
+     * @throws petriNetException
+     */
     public void removeIncoming(Place toBeRemoved) throws petriNetException {
     	if (toBeRemoved == null) {
             throw new petriNetException(petriNetConstants.NULL_INPUT);
@@ -85,6 +127,11 @@ public class Transition {
     	incoming.remove(toBeRemoved);
     }
     
+    /**
+     * Remove an outgoing place
+     * @param toBeRemoved - a place to be removed
+     * @throws petriNetException
+     */
     public void removeOutgoing(Place toBeRemoved) throws petriNetException {
     	if (toBeRemoved == null) {
             throw new petriNetException(petriNetConstants.NULL_INPUT);
@@ -96,6 +143,11 @@ public class Transition {
     	outgoing.remove(toBeRemoved);
     }
     
+    /**
+     * Add incoming places
+     * @param toBeAdded - list of places
+     * @throws petriNetException
+     */
     public void addIncoming(ArrayList<Place> toBeAdded) throws petriNetException {
     	if (toBeAdded == null) {
             throw new petriNetException(petriNetConstants.NULL_INPUT);
@@ -109,6 +161,11 @@ public class Transition {
     	incoming.addAll(toBeAdded);
     }
     
+    /**
+     * Add outgoing places
+     * @param toBeAdded - list of places
+     * @throws petriNetException 
+     */
     public void addOutgoing(ArrayList<Place> toBeAdded) throws petriNetException {
     	if (toBeAdded == null) {
             throw new petriNetException(petriNetConstants.NULL_INPUT);
@@ -122,6 +179,11 @@ public class Transition {
     	outgoing.addAll(toBeAdded);
     }
     
+    /**
+     * Set the incoming places
+     * @param incoming - list of places
+     * @throws petriNetException
+     */
     public void setIncoming(ArrayList<Place> incoming) throws petriNetException {
     	if (incoming == null) {
             throw new petriNetException(petriNetConstants.NULL_INPUT);
@@ -130,6 +192,11 @@ public class Transition {
     	this.incoming = incoming;
     }
     
+    /**
+     * Set the outgoing places
+     * @param outgoing - list of places
+     * @throws petriNetException
+     */
     public void setOutgoing(ArrayList<Place> outgoing) throws petriNetException {
     	if (outgoing == null) {
             throw new petriNetException(petriNetConstants.NULL_INPUT);
