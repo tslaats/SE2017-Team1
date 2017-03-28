@@ -11,6 +11,7 @@ import petriNet.visualization.utils.petriNetException;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 /**
@@ -94,6 +95,9 @@ public class PetriNet extends JPanel {
     	if (this.places.contains(place)) {
 			throw new petriNetException(petriNetConstants.DUPLICATED);
 		}
+    	ArrayList<Integer> listOfIdsToBeAdded = new ArrayList<Integer>();
+    	listOfIdsToBeAdded.add(place.getId());
+    	checkIds(listOfIdsToBeAdded);
     	
     	places.add(place);
     }
@@ -107,6 +111,11 @@ public class PetriNet extends JPanel {
     			throw new petriNetException(petriNetConstants.DUPLICATED);
     		}
     	}
+    	ArrayList<Integer> listOfIdsToBeAdded = new ArrayList<Integer>();
+    	for (Place place : places) {
+    		listOfIdsToBeAdded.add(place.getId());
+    	}
+    	checkIds(listOfIdsToBeAdded);
     	
     	this.places.addAll(places);
     }
@@ -118,6 +127,9 @@ public class PetriNet extends JPanel {
     	if (this.transitions.contains(transition)) {
 			throw new petriNetException(petriNetConstants.DUPLICATED);
 		}
+    	ArrayList<Integer> listOfIdsToBeAdded = new ArrayList<Integer>();
+    	listOfIdsToBeAdded.add(transition.getId());
+    	checkIds(listOfIdsToBeAdded);
     	
     	transitions.add(transition);
     }
@@ -131,8 +143,26 @@ public class PetriNet extends JPanel {
     			throw new petriNetException(petriNetConstants.DUPLICATED);
     		}
     	}
+    	ArrayList<Integer> listOfIdsToBeAdded = new ArrayList<Integer>();
+    	for (Transition transition : transitions) {
+    		listOfIdsToBeAdded.add(transition.getId());
+    	}
+    	checkIds(listOfIdsToBeAdded);
     	
     	this.transitions.addAll(transitions);
+    }
+    
+    private void checkIds(ArrayList<Integer> listOfIdsToBeAdded) throws petriNetException {
+    	ArrayList<Integer> listOfIds = new ArrayList<Integer>();
+    	for (Transition transition : transitions) {
+    		listOfIds.add(transition.getId());
+    	}
+    	for (Place place : places) {
+    		listOfIds.add(place.getId());
+    	}
+    	if (!Collections.disjoint(listOfIdsToBeAdded, listOfIds)) {
+			throw new petriNetException(petriNetConstants.DUPLICATED);
+		}
     }
     
     public void removePlace(Place place) throws petriNetException {

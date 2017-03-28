@@ -30,8 +30,12 @@ public class Place {
      *  This is a constructor that creates a new instance of the place class and
      *  populates all of the variables, such as the top left point of the object
      *  and if this place has a token initially, and all of the edge transitions
+     * @throws petriNetException 
      */
-    public Place (int id, Point position, boolean token, Transition incoming, Transition outgoing) {
+    public Place (int id, Point position, boolean token, Transition incoming, Transition outgoing) throws petriNetException {
+    	if (position.getX() < 15 || position.getY() < 15) {
+    		throw new petriNetException(petriNetConstants.INVALID_POSITION);
+        }
         this.id         = id;
         this.position   = position;
         this.token      = token;
@@ -62,6 +66,9 @@ public class Place {
     public void setPosition(Point position) throws petriNetException {
     	if (position == null) {
             throw new petriNetException(petriNetConstants.NULL_INPUT);
+        }
+    	if (position.getX() < 15 || position.getY() < 15) {
+    		throw new petriNetException(petriNetConstants.INVALID_POSITION);
         }
     	
     	this.position = position;

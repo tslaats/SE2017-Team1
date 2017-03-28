@@ -27,8 +27,13 @@ public class Transition {
      *  This is a constructor, that creates a new instance of the transition and
      *  populates all of the variables, such as the top left point of the object
      *  and the given name of the transition, and every of the connecting places
+     * @throws petriNetException 
      */
-    public Transition (int id, Point position, String name) {
+    public Transition (int id, Point position, String name) throws petriNetException {
+    	if (position.getX() < Math.ceil(7.5*name.length())/2 || position.getY() < 20) {
+    		throw new petriNetException(petriNetConstants.INVALID_POSITION);
+        }
+    	
         this.id = id;
         this.position = position;
         this.name = name;
@@ -57,6 +62,9 @@ public class Transition {
     public void setPosition(Point position) throws petriNetException {
     	if (position == null) {
             throw new petriNetException(petriNetConstants.NULL_INPUT);
+        }
+    	if (position.getX() < Math.ceil(7.5*name.length())/2 || position.getY() < 20) {
+    		throw new petriNetException(petriNetConstants.INVALID_POSITION);
         }
     	
     	this.position = position;
