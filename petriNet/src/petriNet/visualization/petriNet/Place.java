@@ -101,6 +101,10 @@ public class Place {
                 position.x + "," + position.y + ")");
     }
 
+    /**
+     * Paints the Place
+     * @param g - graphic object to contain the Place
+     */
     public void paintPlace(Graphics g){
         int diameter = 30;
 

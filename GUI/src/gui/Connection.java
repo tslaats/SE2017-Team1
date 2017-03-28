@@ -1,4 +1,6 @@
-package petriNet.visualization.petriNet;
+package gui;
+
+
 /**
  *  @project >> Software Engineering 2017
  *  @authors >> Emil, Frederik, Mads, Susanne, Philip Falck
@@ -13,19 +15,19 @@ import java.awt.geom.Line2D;
  * Connection handles the logic concerning the drawing arrows between a place & transition
  */
 public class Connection{
-    private Place place;
-    private Transition transition;
+    private PetriPlace place;
+    private PetriTransition transition;
     private String whereTo;
 
     /**
      * Innitiates a Connection
-     * @param place
-     * @param transition
+     * @param place2
+     * @param t
      * @param whereTo - Dictates the direction of the arrow
      */
-    public Connection(Place place, Transition transition, String whereTo){
-        this.place = place;
-        this.transition = transition;
+    public Connection(PetriPlace place2, PetriTransition t, String whereTo){
+        this.place = place2;
+        this.transition = t;
         this.whereTo = whereTo;
     }
 
@@ -92,9 +94,8 @@ public class Connection{
     }
 
     /**
-     * Used to draw a Connection. A lot going on here, but it mostly boils down to rotation matrices & reducing vector
-     * length based on the receiving type (e.g Transition)
-     * @param g - graphical object that contains the arrow
+     *
+     * @param g
      */
     public void paint(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
@@ -109,7 +110,7 @@ public class Connection{
             from = place.getPosition();
             to = transition.getPosition();
 
-            // Determining ho much to shrink the vector based on whether the arrow is straight or not.
+            // Determining ho much to shrink the vector based on whether the arrow is straigth or not.
             Point resizedTo;
             if (to.x == from.x) { // The arrow is straigth
 
