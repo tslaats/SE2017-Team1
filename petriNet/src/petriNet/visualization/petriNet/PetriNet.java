@@ -1,10 +1,14 @@
-package src;
+package petriNet.visualization.petriNet;
 /**
  *  @project >> Software Engineering 2017
  *  @authors >> Emil, Frederik, Mads, Susanne, Philip Falck
  */
 
 import javax.swing.*;
+
+import petriNet.visualization.utils.petriNetConstants;
+import petriNet.visualization.utils.petriNetException;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,10 +41,11 @@ public class PetriNet extends JPanel {
      *  This tries to retrieve/set a place, and if it has been assigned it will then
      *  return it. However in the case that it hasn't been set and someone tries
      *  to get it, it will throw an exception as that is an illegal graph action
+     * @throws petriNetException 
      */
-    public Place getStart () {
+    public Place getStart () throws petriNetException {
         if (start == null) {
-            throw new NullPointerException();
+            throw new petriNetException(petriNetConstants.NULL_INPUT);
         }
         else {
             return (start);
@@ -48,9 +53,9 @@ public class PetriNet extends JPanel {
     }
 
     // setStart
-    public void setStart(Place inputStart) {
+    public void setStart(Place inputStart) throws petriNetException {
         if (inputStart == null) {
-            throw new NullPointerException();
+            throw new petriNetException(petriNetConstants.NULL_INPUT);
         }
         else {
             start = inputStart;
@@ -61,40 +66,113 @@ public class PetriNet extends JPanel {
      *  This tries to retrieve a place, and if it has been assigned it will then
      *  return it. However in the case that it hasn't been set and someone tries
      *  to get it, it will throw an exception as that is an illegal graph action
+     * @throws petriNetException 
      */
-    public Place getEnd () {
+    public Place getEnd () throws petriNetException {
         if (end == null) {
-            throw new NullPointerException();
+            throw new petriNetException(petriNetConstants.NULL_INPUT);
         }
         else {
-            return (end);
+            return end;
         }
     }
 
     // setEnd
-    public void setEnd(Place inputEnd) {
+    public void setEnd(Place inputEnd) throws petriNetException {
         if (inputEnd == null) {
-            throw new NullPointerException();
+            throw new petriNetException(petriNetConstants.NULL_INPUT);
         }
         else {
             end = inputEnd;
         }
     }
     
-    public void addSinglePlace(Place place) {
+    public void addSinglePlace(Place place) throws petriNetException {
+    	if (place == null) {
+            throw new petriNetException(petriNetConstants.NULL_INPUT);
+        }
+    	if (this.places.contains(place)) {
+			throw new petriNetException(petriNetConstants.DUPLICATED);
+		}
+    	
     	places.add(place);
     }
     
-    public void addPlaces(ArrayList<Place> places) {
+    public void addPlaces(ArrayList<Place> places) throws petriNetException {
+    	if (places == null) {
+            throw new petriNetException(petriNetConstants.NULL_INPUT);
+        } 
+    	for (Place place : places) {
+    		if (this.places.contains(place)) {
+    			throw new petriNetException(petriNetConstants.DUPLICATED);
+    		}
+    	}
+    	
     	this.places.addAll(places);
     }
     
-    public void addSingleTransition(Transition transition) {
+    public void addSingleTransition(Transition transition) throws petriNetException {
+    	if (transition == null) {
+            throw new petriNetException(petriNetConstants.NULL_INPUT);
+        }
+    	if (this.transitions.contains(transition)) {
+			throw new petriNetException(petriNetConstants.DUPLICATED);
+		}
+    	
     	transitions.add(transition);
     }
     
-    public void addTransitions(ArrayList<Transition> transitions) {
+    public void addTransitions(ArrayList<Transition> transitions) throws petriNetException {
+    	if (transitions == null) {
+            throw new petriNetException(petriNetConstants.NULL_INPUT);
+        }
+    	for (Transition transition : transitions) {
+    		if (this.transitions.contains(transition)) {
+    			throw new petriNetException(petriNetConstants.DUPLICATED);
+    		}
+    	}
+    	
     	this.transitions.addAll(transitions);
+    }
+    
+    public void removePlace(Place place) throws petriNetException {
+    	if (place == null) {
+            throw new petriNetException(petriNetConstants.NULL_INPUT);
+        }
+    	if (!this.places.contains(place)) {
+            throw new petriNetException(petriNetConstants.NOT_AVAILABLE);
+        }
+    	
+    	Transition outgoing = place.getOutgoing();
+    	Transition incoming = place.getIncoming();
+    	incoming.removeOutgoing(place);
+    	outgoing.removeIncoming(place);
+    	this.places.remove(place);
+    	if (place == start) {
+    		start = null;
+    	}
+    	else if (place == end) {
+    		end = null;
+    	}
+    }
+    
+    public void removeTransition(Transition transition) throws petriNetException {
+    	if (transition == null) {
+            throw new petriNetException(petriNetConstants.NULL_INPUT);
+        }
+    	if (!this.transitions.contains(transition)) {
+            throw new petriNetException(petriNetConstants.NOT_AVAILABLE);
+        }
+    	
+    	ArrayList<Place> outgoing = transition.getOutgoing();
+    	ArrayList<Place> incoming = transition.getIncoming();
+    	for (Place place : incoming) {
+    		place.setOutgoing(null);
+    	}
+    	for (Place place : outgoing) {
+    		place.setIncoming(null);
+    	}
+    	this.transitions.remove(transition);
     }
     
     public ArrayList<Place> getPlaces() {

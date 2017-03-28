@@ -1,5 +1,8 @@
-package src;
+package petriNet.visualization.petriNet;
 import javax.swing.JFrame;
+
+import petriNet.visualization.utils.petriNetException;
+
 import java.awt.Point;
 import java.util.ArrayList;
 
@@ -10,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Main {
 
-    public static void main (String[] args) {
+    public static void main (String[] args) throws petriNetException {
     	PetriNet g = new PetriNet();
         
     	Transition t1 = new Transition( 2, new Point(1000, 250), "Receive order");
@@ -98,7 +101,7 @@ public class Main {
         JFrame frame = new JFrame("Test");
 
         frame.add(g);
-        frame.setSize(1000, 800);
+        frame.setSize(1200, 800);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         

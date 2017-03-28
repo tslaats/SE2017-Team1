@@ -1,4 +1,4 @@
-package src;
+package petriNet.visualization.petriNet;
 /**
  *  @project >> Software Engineering 2017
  *  @authors >> Emil, Frederik, Mads, Susanne, Philip Falck
@@ -7,6 +7,9 @@ package src;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+
+import petriNet.visualization.utils.petriNetConstants;
+import petriNet.visualization.utils.petriNetException;
 
 /**
  *  This is the transition class. It holds an instance of a transition node, for
@@ -51,7 +54,11 @@ public class Transition {
     	return outgoing;
     }
     
-    public void setPosition(Point position) {
+    public void setPosition(Point position) throws petriNetException {
+    	if (position == null) {
+            throw new petriNetException(petriNetConstants.NULL_INPUT);
+        }
+    	
     	this.position = position;
     }
     
@@ -59,27 +66,66 @@ public class Transition {
     	this.name = name;
     }
     
-    public void removeIncoming(ArrayList<Place> toBeRemoved) {
-    	incoming.removeAll(toBeRemoved);
+    public void removeIncoming(Place toBeRemoved) throws petriNetException {
+    	if (toBeRemoved == null) {
+            throw new petriNetException(petriNetConstants.NULL_INPUT);
+        }
+    	if (!this.incoming.contains(toBeRemoved)) {
+            throw new petriNetException(petriNetConstants.NOT_AVAILABLE);
+        }
+    	
+    	incoming.remove(toBeRemoved);
     }
     
-    public void removeOutgoing(ArrayList<Place> toBeRemoved) {
-    	outgoing.removeAll(toBeRemoved);
+    public void removeOutgoing(Place toBeRemoved) throws petriNetException {
+    	if (toBeRemoved == null) {
+            throw new petriNetException(petriNetConstants.NULL_INPUT);
+        }
+    	if (!this.outgoing.contains(toBeRemoved)) {
+            throw new petriNetException(petriNetConstants.NOT_AVAILABLE);
+        }
+    	
+    	outgoing.remove(toBeRemoved);
     }
     
-    public void addIncoming(ArrayList<Place> toBeAdded) {
+    public void addIncoming(ArrayList<Place> toBeAdded) throws petriNetException {
+    	if (toBeAdded == null) {
+            throw new petriNetException(petriNetConstants.NULL_INPUT);
+        }
+    	for (Place place : toBeAdded) {
+    		if (incoming.contains(place)) {
+    			throw new petriNetException(petriNetConstants.DUPLICATED);
+    		}
+    	}
+    	
     	incoming.addAll(toBeAdded);
     }
     
-    public void addOutgoing(ArrayList<Place> toBeAdded) {
+    public void addOutgoing(ArrayList<Place> toBeAdded) throws petriNetException {
+    	if (toBeAdded == null) {
+            throw new petriNetException(petriNetConstants.NULL_INPUT);
+        }
+    	for (Place place : toBeAdded) {
+    		if (incoming.contains(place)) {
+    			throw new petriNetException(petriNetConstants.DUPLICATED);
+    		}
+    	}
+    	
     	outgoing.addAll(toBeAdded);
     }
     
-    public void setIncoming(ArrayList<Place> incoming) {
+    public void setIncoming(ArrayList<Place> incoming) throws petriNetException {
+    	if (incoming == null) {
+            throw new petriNetException(petriNetConstants.NULL_INPUT);
+        }
+    	
     	this.incoming = incoming;
     }
     
-    public void setOutgoing(ArrayList<Place> outgoing) {
+    public void setOutgoing(ArrayList<Place> outgoing) throws petriNetException {
+    	if (outgoing == null) {
+            throw new petriNetException(petriNetConstants.NULL_INPUT);
+        }
     	this.outgoing = outgoing;
     }
     

@@ -1,4 +1,4 @@
-package src;
+package petriNet.visualization.petriNet;
 
 /**
  *  @project >> Software Engineering 2017
@@ -8,6 +8,9 @@ package src;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
+
+import petriNet.visualization.utils.petriNetConstants;
+import petriNet.visualization.utils.petriNetException;
 
 /**
  *  This is the class for creating a place in a petri graph. It consists of four
@@ -56,15 +59,19 @@ public class Place {
     	return token;
     }
     
-    public void setPosition(Point position) {
+    public void setPosition(Point position) throws petriNetException {
+    	if (position == null) {
+            throw new petriNetException(petriNetConstants.NULL_INPUT);
+        }
+    	
     	this.position = position;
     }
     
-    public void setIncoming(Transition incoming) {
+    public void setIncoming(Transition incoming) throws petriNetException {
     	this.incoming = incoming;
     }
     
-    public void setOutgoing(Transition outgoing) {
+    public void setOutgoing(Transition outgoing) throws petriNetException {    	
     	this.outgoing = outgoing;
     }
     
