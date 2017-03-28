@@ -1,6 +1,9 @@
-package petriNet.visualization.petriNet;
+package petriNet.visualization.Tests;
 import javax.swing.JFrame;
 
+import petriNet.visualization.petriNet.PetriNet;
+import petriNet.visualization.petriNet.Place;
+import petriNet.visualization.petriNet.Transition;
 import petriNet.visualization.utils.petriNetException;
 
 import java.awt.Point;
@@ -11,7 +14,7 @@ import java.util.ArrayList;
  *  anything else. It manually setups the petri graph that has been shown in the
  *  lecture 3 slides, page 22 / 77. It creates the graph, and then pretty prints
  */
-public class Main {
+public class PetriNetSystemTest {
 
     public static void main (String[] args) throws petriNetException {
     	test1();
