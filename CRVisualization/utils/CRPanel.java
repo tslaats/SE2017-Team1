@@ -27,7 +27,8 @@ public class CRPanel extends JPanel {
   }
   
   protected static Activity convertToActivity(ConresActivity conresActivity){ 
-  	return new Activity(conresActivity.position, conresActivity.name, conresActivity.role, conresActivity.isExecuted, conresActivity.isPending, conresActivity.hasPetri);
+  	return new Activity(conresActivity.getPosition(), conresActivity.getBody(), conresActivity.getTitle(),
+  			conresActivity.getExecuted(), conresActivity.getPending(), conresActivity.containsPetri());
   }
   
   protected static Relation convertToRelation(ConresRelation conresRelation){

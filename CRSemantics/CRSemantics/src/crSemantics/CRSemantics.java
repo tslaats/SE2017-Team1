@@ -22,7 +22,8 @@ public class CRSemantics implements Semantics {
     public CRSemantics() {
         this.semanticsFactory = new SemanticsFactory();
     }
-
+    
+    /***
     private boolean isExecutable(ConresGraph graph, int id) {
         for (int i = 0; i < graph.activities.size(); i++) {
             if (graph.activities.get(i).id == id)
@@ -43,6 +44,7 @@ public class CRSemantics implements Semantics {
         }
         return true;
     }
+    ***/
 
     @Override
     public List<Integer> getPossibleActions(Graph graph) throws Exception {
@@ -54,8 +56,24 @@ public class CRSemantics implements Semantics {
         }
         List<Integer> actions = new ArrayList<Integer>();
         for (int i = 0; i < crGraph.activities.size(); i++) {
-            if (!crGraph.activities.get(i).isExecuted && noBlockingConditions(crGraph.activities.get(i), crGraph)) {
-                actions.add(crGraph.activities.get(i).id);
+        	ConresActivity activity = crGraph.activities.get(i);
+            if (!activity.isExecuted && noBlockingConditions(activity, crGraph)) {
+                 
+            	
+            	Boolean nestedComplete = false;
+            	
+            	if(activity.nestedGraph == null){
+            		actions.add(crGraph.activities.get(i).id);
+            	}
+            	else{
+            		Semantics semantics = semanticsFactory.getSemantics(activity.nestedGraph);
+            		actions.addAll(semantics.getPossibleActions(activity.nestedGraph));
+            		nestedComplete = semantics.isFinished(activity.nestedGraph);
+            		// If the nestedGraph is complete then we can add the activity to actions.
+            		if (nestedComplete){
+                		actions.add(crGraph.activities.get(i).id);
+            		}
+            	}
             }
         }
         return actions;
