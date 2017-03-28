@@ -229,6 +229,11 @@ public class PetriNet extends JPanel {
     }
 
 
+    /**
+     * Quality-of-life function for generating all Connections for a given Transition
+     * @param t - Transition
+     * @param connections - Array containing the connections
+     */
     private void genSingleConnection(Transition t, ArrayList<Connection> connections){
         ArrayList<Place> incoming = t.getIncoming();
         ArrayList<Place> outgoing = t.getOutgoing();
@@ -243,6 +248,10 @@ public class PetriNet extends JPanel {
         }
     }
 
+    /**
+     * Generates all connections in the petri net
+     * @return A array of connections
+     */
     private ArrayList<Connection> generateAllConnections(){
     	ArrayList<Connection> connections = new ArrayList<Connection>();
 
@@ -260,6 +269,11 @@ public class PetriNet extends JPanel {
         return connections;
     }
 
+    /**
+     * This is the meat and bones of the implementation. This function is both responsible for taking all
+     * Places/Transitions and populate the Connections-array and draw all the figures in the petrinet
+     * @param g - The graphical object used to contain the petri net
+     */
     @Override
     public void paint(Graphics g){
     	ArrayList<Connection> connections = generateAllConnections();

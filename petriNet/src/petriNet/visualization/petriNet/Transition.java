@@ -141,6 +141,11 @@ public class Transition {
                 ", Position: " + position.x + "," + position.y + ")");
     }
 
+
+    /**
+     * Paints the Trasition
+     * @param g - graphic object to contain the Transition
+     */
     public void paintTransition(Graphics g){
     	String label = name;
     	if (name.length() > 15 && !name.isEmpty()) {

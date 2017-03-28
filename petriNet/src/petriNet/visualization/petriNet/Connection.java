@@ -92,8 +92,9 @@ public class Connection{
     }
 
     /**
-     *
-     * @param g
+     * Used to draw a Connection. A lot going on here, but it mostly boils down to rotation matrices & reducing vector
+     * length based on the receiving type (e.g Transition)
+     * @param g - graphical object that contains the arrow
      */
     public void paint(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
@@ -108,7 +109,7 @@ public class Connection{
             from = place.getPosition();
             to = transition.getPosition();
 
-            // Determining ho much to shrink the vector based on whether the arrow is straigth or not.
+            // Determining ho much to shrink the vector based on whether the arrow is straight or not.
             Point resizedTo;
             if (to.x == from.x) { // The arrow is straigth
 
