@@ -17,9 +17,9 @@ public final class Constants {
   public static final Color CONDITION_RELATION_COLOR = new Color(255,69,0);
   public static final Color RESPONSE_RELATION_COLOR = new Color(0,0,255);
   public static final Color ACTIVITY_BACKGROUND_COLOR = Color.white;
-  public static final String CHECKMARK_SYMB = "\u2714";
-  public static final String EXCLAMATION_SYMB = "\u2757";
+  public static final String CHECKMARK_SYMB = "\u2713";
+  public static final String EXCLAMATION_SYMB = "\u0021";
   public static final Font BASIC_FONT = new Font("Verdana", Font.PLAIN, Constants.LINE_HEIGHT);
   public static final Font CHECKMARK_FONT = new Font("LucidaSans", Font.PLAIN, Constants.LINE_HEIGHT + 12);
-  public static final Font EXCLAMATION_FONT = new Font("ComicSans", Font.PLAIN, Constants.LINE_HEIGHT + 12);
+  public static final Font EXCLAMATION_FONT = new Font("ComicSans", Font.BOLD, Constants.LINE_HEIGHT + 12);
 }
