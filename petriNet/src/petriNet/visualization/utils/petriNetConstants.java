@@ -1,7 +1,7 @@
 package petriNet.visualization.utils;
 
 /**
- * BookStoreConstants declares the constants used in the CertainBookStore (by
+ * petriNetConstants declares the constants used in the CertainBookStore (by
  * both servers and clients).
  */
 public final class petriNetConstants {
